@@ -1,3 +1,153 @@
 <link rel="stylesheet" href="/editormd.css">
-<!DOCTYPE html> <html lang="zh"> <head> <meta charset="utf-8"/> <title>Markdown在线编辑器 - www.MdEditor.com</title> <link rel="shortcut icon" href="https://www.mdeditor.com/images/logos/favicon.ico" type="image/x-icon"/> </head> <body><table> <thead> <tr> <th>函数名</th> <th>描述</th> </tr> </thead> <tbody> <tr> <td><a href="#findMultiColorInRegionFuzzy"><code>findMultiColorInRegionFuzzy()</code></a></td> <td><strong>多点模糊找色</strong></td> </tr> <tr> <td><a href="#findMultiColorInRegionFuzzy"><code>findMultiColorInRegionFuzzy2()</code></a></td> <td><strong>多点模糊找色,百分比范围</strong></td> </tr> <tr> <td><a href="#Threads"><code>Threads()</code></a></td> <td><strong>线程,只能有一个，使用前确保上一个Threads已经退出，脚本逻辑应该写在线程中</strong></td> </tr> <tr> <td><a href="#setScreenOrientation"><code>setScreenOrientation()</code></a></td> <td><strong>设置屏幕截图方向，只能设置一次，多次设置没有用</strong></td> </tr> <tr> <td><a href="#Type"><code>Type()</code></a></td> <td><strong>返回java类型字符串</strong></td> </tr> <tr> <td><a href="#toast"><code>toast()</code></a></td> <td><strong>toast</strong></td> </tr> <tr> <td><a href="#c:slideTap"><code>c:slideTap()</code></a></td> <td><strong>滑动后再点击</strong></td> </tr> <tr> <td><a href="#c:slide"><code>c:slide()</code></a></td> <td><strong>滑动</strong></td> </tr> <tr> <td><a href="#tap"><code>tap()</code></a></td> <td><strong>点击</strong></td> </tr> </tbody> </table> <table> <thead> <tr> <th>函数名Ui</th> <th>描述</th> </tr> </thead> <tbody> <tr> <td><code>Button()</code></td> <td><strong>按钮</strong></td> </tr> <tr> <td><code>EditText()</code></td> <td><strong>编辑框</strong></td> </tr> <tr> <td><code>HorizontalScrollView()</code></td> <td><strong>水平滚动条</strong></td> </tr> <tr> <td><code>ScrollView()</code></td> <td><strong>垂直滚动条</strong></td> </tr> <tr> <td><code>TextView()</code></td> <td><strong>TextView</strong></td> </tr> <tr> <td><code>LinearLayout()</code></td> <td><strong>线性布局</strong></td> </tr> <tr> <td><a href="#LinearLayout_LayoutParams"><code>LinearLayout_LayoutParams()</code></a></td> <td><strong>LinearLayout_LayoutParams</strong></td> </tr> <tr> <td><a href="#App"><code>App()</code></a></td> <td><strong>Activity</strong></td> </tr> <tr> <td><a href="#FloatWindow"><code>FloatWindow()</code></a></td> <td><strong>悬浮窗</strong></td> </tr> </tbody> </table> <hr> <table> <thead> <tr> <th>函数名</th> <th>参数</th> </tr> </thead> <tbody> <tr> <td><a id="findMultiColorInRegionFuzzy"></a><code>findMultiColorInRegionFuzzy()</code></td> <td><code>int mainColor, String subColors, double distance, int x1, int y1, int x2, int y2</code></td> </tr> <tr> <td><a id="findMultiColorInRegionFuzzy2"></a> <code>findMultiColorInRegionFuzzy2()</code></td> <td><code>int mainColor, String subColors, double distance, double x1, double y1, double x2, double y2</code></td> </tr> <tr> <td><a id="Threads"></a> <code>Threads()</code></td> <td><code>LuaObject luaFunc</code></td> </tr> <tr> <td><a id="setScreenOrientation"></a> <code>setScreenOrientation()</code></td> <td><code>int index</code></td> </tr> <tr> <td><a id="Type"></a> <code>Type()</code></td> <td><code>Object O</code></td> </tr> <tr> <td><a id="toast"></a> <code>toast()</code></td> <td><code>String str</code></td> </tr> <tr> <td><a id="c:slideTap"></a> <code>c:slideTap()</code></td> <td><code>final int x, final int y, final int x2, final int y2, final int x3, final int y3, final int duration</code></td> </tr> <tr> <td><a id="c:slide"></a> <code>c:slide()</code></td> <td><code>int x, int y, int x2, int y2, int duration</code></td> </tr> <tr> <td><a id="tap"></a> <code>tap()</code></td> <td><code>int x, int y, int t</code></td> </tr> <tr> <td><a id="LinearLayout_LayoutParams"></a> <code>LinearLayout_LayoutParams()</code></td> <td><code>int width, int height</code></td> </tr> <tr> <td><a id="App"></a> <code>App()</code></td> <td><code>View view</code></td> </tr> <tr> <td><a id="FloatWindow"></a> <code>FloatWindow()</code></td> <td><code>Context context, View view,boolean isMove</code></td> </tr> </tbody> </table> </body> </html>
-
+<div class="markdown-body editormd-preview-container" previewcontainer="true" style="padding: 20px;"><table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#findMultiColorInRegionFuzzy"><code>findMultiColorInRegionFuzzy()</code></a></td>
+<td><strong>多点模糊找色</strong></td>
+</tr>
+<tr>
+<td><a href="#findMultiColorInRegionFuzzy"><code>findMultiColorInRegionFuzzy2()</code></a></td>
+<td><strong>多点模糊找色,百分比范围</strong></td>
+</tr>
+<tr>
+<td><a href="#Threads"><code>Threads()</code></a></td>
+<td><strong>线程,只能有一个，使用前确保上一个Threads已经退出，脚本逻辑应该写在线程中</strong></td>
+</tr>
+<tr>
+<td><a href="#setScreenOrientation"><code>setScreenOrientation()</code></a></td>
+<td><strong>设置屏幕截图方向，只能设置一次，多次设置没有用</strong></td>
+</tr>
+<tr>
+<td><a href="#Type"><code>Type()</code></a></td>
+<td><strong>返回java类型字符串</strong></td>
+</tr>
+<tr>
+<td><a href="#toast"><code>toast()</code></a></td>
+<td><strong>toast</strong></td>
+</tr>
+<tr>
+<td><a href="#c:slideTap"><code>c:slideTap()</code></a></td>
+<td><strong>滑动后再点击</strong></td>
+</tr>
+<tr>
+<td><a href="#c:slide"><code>c:slide()</code></a></td>
+<td><strong>滑动</strong></td>
+</tr>
+<tr>
+<td><a href="#tap"><code>tap()</code></a></td>
+<td><strong>点击</strong></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数名Ui</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Button()</code></td>
+<td><strong>按钮</strong></td>
+</tr>
+<tr>
+<td><code>EditText()</code></td>
+<td><strong>编辑框</strong></td>
+</tr>
+<tr>
+<td><code>HorizontalScrollView()</code></td>
+<td><strong>水平滚动条</strong></td>
+</tr>
+<tr>
+<td><code>ScrollView()</code></td>
+<td><strong>垂直滚动条</strong></td>
+</tr>
+<tr>
+<td><code>TextView()</code></td>
+<td><strong>TextView</strong></td>
+</tr>
+<tr>
+<td><code>LinearLayout()</code></td>
+<td><strong>线性布局</strong></td>
+</tr>
+<tr>
+<td><a href="#LinearLayout_LayoutParams"><code>LinearLayout_LayoutParams()</code></a></td>
+<td><strong>LinearLayout_LayoutParams</strong></td>
+</tr>
+<tr>
+<td><a href="#App"><code>App()</code></a></td>
+<td><strong>Activity</strong></td>
+</tr>
+<tr>
+<td><a href="#FloatWindow"><code>FloatWindow()</code></a></td>
+<td><strong>悬浮窗</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a id="findMultiColorInRegionFuzzy"></a><code>findMultiColorInRegionFuzzy()</code></td>
+<td><code>int mainColor, String subColors, double distance, int x1, int y1, int x2, int y2</code></td>
+</tr>
+<tr>
+<td><a id="findMultiColorInRegionFuzzy2"></a> <code>findMultiColorInRegionFuzzy2()</code></td>
+<td><code>int mainColor, String subColors, double distance, double x1, double y1, double x2, double y2</code></td>
+</tr>
+<tr>
+<td><a id="Threads"></a> <code>Threads()</code></td>
+<td><code>LuaObject luaFunc</code></td>
+</tr>
+<tr>
+<td><a id="setScreenOrientation"></a> <code>setScreenOrientation()</code></td>
+<td><code>int index</code></td>
+</tr>
+<tr>
+<td><a id="Type"></a> <code>Type()</code></td>
+<td><code>Object O</code></td>
+</tr>
+<tr>
+<td><a id="toast"></a> <code>toast()</code></td>
+<td><code>String str</code></td>
+</tr>
+<tr>
+<td><a id="c:slideTap"></a> <code>c:slideTap()</code></td>
+<td><code>final int x, final int y, final int x2, final int y2, final int x3, final int y3, final int duration</code></td>
+</tr>
+<tr>
+<td><a id="c:slide"></a> <code>c:slide()</code></td>
+<td><code>int x, int y, int x2, int y2, int duration</code></td>
+</tr>
+<tr>
+<td><a id="tap"></a> <code>tap()</code></td>
+<td><code>int x, int y, int t</code></td>
+</tr>
+<tr>
+<td><a id="LinearLayout_LayoutParams"></a> <code>LinearLayout_LayoutParams()</code></td>
+<td><code>int width, int height</code></td>
+</tr>
+<tr>
+<td><a id="App"></a> <code>App()</code></td>
+<td><code>View view</code></td>
+</tr>
+<tr>
+<td><a id="FloatWindow"></a> <code>FloatWindow()</code></td>
+<td><code>Context context, View view,boolean isMove</code></td>
+</tr>
+</tbody>
+</table>
+</div>
