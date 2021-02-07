@@ -1,7 +1,7 @@
 {
 "Version":1,
   "msg":"修复多线程bug\n增加示例代码。",
-  "version":2,
+  "version":3,
   "msg2":"修复多线程bug\n增加示例代码。"
   
 
