@@ -5,7 +5,7 @@
 <script>
         let btn = document.querySelector("#btn")
         btn.addEventListener("click",()=>{
-                
+                testHttp()
         })
         function testHttp(){
                fetch("https://47.120.32.20:8000/blogs/test/",{method:"post"})
@@ -16,6 +16,7 @@
                         return response.json();
                 })
                 .then(data => {
+                        alert(data)
                         console.log(data)
                 })
                 .catch(error => console.error('Fetch error:', error));
