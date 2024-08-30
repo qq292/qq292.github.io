@@ -5,27 +5,37 @@
 
 
 <div class="markdown-body editormd-preview-container" previewcontainer="true" style="padding: 20px;">
+<img src="#" alt="验证码图" id="img"/>
 <h2 id="-">如果对您有用请资助我</h2>
-<button id="btn">按钮</button>
+        
 <script>
-        let btn = document.querySelector("#btn")
-        btn.addEventListener("click",()=>{
+      
+        
+        document.addEventListener('DOMContentLoaded', function() {
+                const img = document.querySelector("#img")
+                img.addEventListener("click",()=>{
+                        testHttp()
+                })
+                function testHttp(){
+                       fetch("http://47.120.32.20:8000/blog/updateCaptcha/",{method:"post"})
+                        .then(response => {
+                                if (!response.ok) {
+                                        throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                        })
+                        .then(data => {
+                                img.src=data['img_url']
+                        })
+                        .catch(error => console.error('Fetch error:', error));
+                }
                 testHttp()
-        })
-        function testHttp(){
-               fetch("https://47.120.32.20:8000/blogs/test/",{method:"post"})
-                .then(response => {
-                        if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                })
-                .then(data => {
-                        alert(data)
-                        console.log(data)
-                })
-                .catch(error => console.error('Fetch error:', error));
-        }
+        });
+        
+
+
+        
+        
 </script>
 <pre style="line-height:14px"><code>´´´´´´´´██´´´´´´´
         ´´´´´´´████´´´´´´
