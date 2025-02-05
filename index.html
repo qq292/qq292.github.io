@@ -529,7 +529,7 @@ loadedAssemblies = GetStorageFileAssemblies(typeName).Result;
             .then(response => response.json())
             .then(data => {
                 // 在这里处理 JSON 数据
-                callBack(data); // 例如，将数据打印到控制台
+                callBack(JSON.parse(data)); // 例如，将数据打印到控制台
                 // displayData(data); // 调用函数来显示数据
             })
             .catch(error => {
