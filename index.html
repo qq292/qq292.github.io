@@ -35,10 +35,10 @@
         --h1-height: 42px;
         --catalog-width: 340px;
         --anim-catalog-width: calc(-1 * var(--catalog-width));
-        --linear-001:linear-gradient(45deg, white 0%, deeppink 40%, skyblue 60%, white 100%);
+        --linear-001: linear-gradient(45deg, white 0%, deeppink 40%, skyblue 60%, white 100%);
         font-size: medium;
-    
-        
+        --green-01: #3da33d;
+
     }
 
     ul {
@@ -78,7 +78,7 @@
         height: calc(100vh - var(--tool-height));
         display: flex;
         flex-wrap: wrap;
-        
+
 
     }
 
@@ -94,7 +94,7 @@
     }
 
     .catalog li:hover a {
-        color: #3da33d;
+        color: var(--green-01);
     }
 
     .catalog li:hover {
@@ -111,14 +111,13 @@
         cursor: pointer;
         width: 100%;
         text-align: left;
-        
+
     }
 
     .content h1 {
         line-height: var(--h1-height);
         padding: 10px 0px;
-        position: sticky;
-        top:0px;
+        top: 0px;
         background-color: white;
     }
 
@@ -141,7 +140,11 @@
         height: 100%;
         position: relative;
         background-color: #e6e6e6;
-        
+
+    }
+
+    .active a {
+        color: var(--green-01) !important;
     }
 
     .catalog {
@@ -165,23 +168,22 @@
         justify-content: center;
         width: 100%;
         height: 100%;
-        
+
     }
 
     .content {
         background-color: white;
         height: 100%;
         width: 50%;
-        min-width: 450px;
         display: flex;
         flex-direction: column;
-        padding: 0px 1.5rem;
+        padding: 0px 3.2rem;
         box-shadow: 0 0 2px gray;
         font-size: medium;
-        line-height: 1.8rem;        
-        padding: 0px 50px;
+        line-height: 1.8rem;
+
     }
-   
+
     .content ul {
         list-style: inside;
     }
@@ -192,7 +194,7 @@
         padding-top: 4px;
         padding-bottom: 4px;
         display: inline-block;
-        
+
     }
 
     img {
@@ -206,14 +208,14 @@
         display: none;
     }
 
-    
+
 
     .toolBar {
         display: flex;
         width: 100%;
         height: var(--tool-height);
         border-bottom: 1px solid gray;
-        position: sticky;
+        /* position: sticky; */
         top: 0px;
         bottom: 100%;
         background-color: transparent;
@@ -262,31 +264,72 @@
             transform: translateX(var(--anim-catalog-width));
         }
     }
-    .toolBar-right-group1{
+
+    .toolBar-right-group1 {
         width: 100%;
         display: flex;
-        justify-content:flex-end;
+        justify-content: flex-end;
     }
-    #lang-select{
+
+    #lang-select {
         display: flex;
         outline: none;
         height: 1.5rem;
         padding: 0px 6px;
-        
+
     }
-    #lang-select:hover{
+
+    #lang-select:hover {
         background-image: var(--linear-001);
         color: transparent;
         background-clip: text;
+    }
+
+    @media (max-width: 2400px) {
+        .content {
+            height: 100%;
+            width: 50%;
+            padding: 0px 3.2rem;
+        }
+
+    }
+
+    @media (max-width: 1199px) {
+        .content {
+            height: 100%;
+            width: 80%;
+            padding: 0px 2.2rem;
+        }
+
+    }
+
+    @media(max-width: 575px) {
+        .content {
+            height: 100%;
+            width: 100%;
+            padding: 0px 1.2rem;
+        }
+
+        .catalog {
+            width: 100%;
+        }
+
+        @keyframes catalog-to {
+            0% {
+                transform: translateX(0%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
     }
 </style>
 
 <body>
     <div class="toolBar">
         <div class="toolBar-left ">
-
             <i id="menu" class="fa fa-align-right" style="font-size:1.15rem;"></i>
-
         </div>
         <div class="toolBar-center ">
             <!-- <button>setting</button> -->
@@ -303,7 +346,7 @@
 
     </div>
     <div class="container ">
-        
+
 
         <div class="content-box">
             <div class="catalog scroll">
@@ -345,7 +388,7 @@
                 行为设计器将按照深度优先的顺序执行任务。你可以通过将任务拖动到其同级任务的左侧/右侧来更改任务的执行顺序。从上面的屏幕截图来看，任务将按照以下顺序执行：
 
                 SequenceA, SelectorA, SequenceB, ActionA, ActionB, ActionC, SelectorB, ActionD, ActionE
-                <img src="images/s006.png">
+                <img src="source/images/s006.png">
                 现在我们已经创建了一个基本行为树，让我们修改其中一个任务的参数。选择 ActionC 节点以在属性面板中调出 Inspector。您可以在此处看到，我们可以重命名任务、将任务设置为即时任务或输入任务注释。此外，我们可以修改 task 类包含的所有公共变量。这包括分配在 Behavior Designer 中创建的变量。在我们的例子中，唯一的公共变量是 Rotation Speed。我们将参数设置为的值将在行为树中使用。
 
                 属性面板中还有其他三个选项卡：Variables、Tasks 和 Behavior。变量面板允许您创建在任务之间共享的变量。有关更多信息，请查看 <a href="https://opsive.com/support/documentation/behavior-designer/variables/"> variables </a>主题。tasks （任务） 面板列出了您可以使用的所有可能任务。此列表与右键单击并添加任务时找到的列表相同。此列表是通过搜索从 action、composite、conditional 或 decorator 任务类型派生的任何类来创建的。最后一个面板（行为面板）显示您在首次创建行为树时添加的 Behavior Tree （行为树） 组件的检查器。有关每个选项的作用的更多详细信息，请参阅  <a href="https://opsive.com/support/documentation/behavior-designer/behavior-tree-component/"> Behavior Component Overview </a>（行为组件概述） 页面。
@@ -428,6 +471,8 @@ loadedAssemblies = GetStorageFileAssemblies(typeName).Result;
     let content = document.querySelector(".content")
     let btn_menu = document.querySelector("#menu")
 
+
+    console.log(JSON.stringify(datas))
     btn_menu.addEventListener("click", () => {
         if (catalog.classList.contains("anim-catalog-to")) {
 
@@ -460,9 +505,9 @@ loadedAssemblies = GetStorageFileAssemblies(typeName).Result;
         }
     }
 
-    function generateContent() {
+    function generateContent(data) {
         let anchors = []
-        for (let [i, data] of datas.entries()) {
+        for (let [i, data] of data.entries()) {
             let p = document.createElement("p")
             let h1 = document.createElement("h1")
             let span = document.createElement("span")
@@ -479,9 +524,30 @@ loadedAssemblies = GetStorageFileAssemblies(typeName).Result;
 
     }
 
+    function readData(callBack) {
+        fetch('data/BehaviorTreeDocument.json') // 'data.json' 是 JSON 文件相对于 index.html 的路径
+            .then(response => response.json())
+            .then(data => {
+                // 在这里处理 JSON 数据
+                callBack(data); // 例如，将数据打印到控制台
+                // displayData(data); // 调用函数来显示数据
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                document.getElementById('data-container').textContent = 'Failed to load data.'; // 显示错误信息
+            });
+
+
+
+    }
+
+    readData((data)=>{
+        console.log(data)
+        let anchors = generateContent(data)
+        generateLeftCatalog(anchors)
+    })
     // let anchors = getAnchoor()
-    let anchors = generateContent()
-    generateLeftCatalog(anchors)
+    
 
 
 </script>
