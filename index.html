@@ -5,8 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="source/css/all.css">
-    <link href="source/css/prism.css" rel="stylesheet" />
+    <link rel="stylesheet" href="source/css/prism.css" />
     <script src="source/js/prism.js"></script>
     <title>Behavior Designer(中文)</title>
 
@@ -276,6 +277,7 @@
         outline: none;
         height: 1.5rem;
         padding: 0px 6px;
+        border-radius: 6px;
 
     }
 
@@ -354,7 +356,7 @@
                 </ul>
             </div>
             <div class="content-article">
-                <div class="content scroll scroll-smooth">
+                <div class="content scroll ">
 
                 </div>
             </div>
@@ -465,25 +467,29 @@ loadedAssemblies = GetStorageFileAssemblies(typeName).Result;
     ]
 </script>
 <script>
+    var catalog_ul, catalog_li
+    window.onload = function () {
+        Prism.highlightAll();
+        catalog_li = document.querySelector(".catalog ul li")
+        catalog_li.addEventListener("click", () => {
+            
+        })
+    }
+    var catalog_ul = document.querySelector(".catalog ul")
+    var catalog = document.querySelector(".catalog")
+    var content = document.querySelector(".content")
+    var btn_menu = document.querySelector("#menu")
 
-    let catalog_ul = document.querySelector(".catalog ul")
-    let catalog = document.querySelector(".catalog")
-    let content = document.querySelector(".content")
-    let btn_menu = document.querySelector("#menu")
 
 
-    console.log(JSON.stringify(datas))
     btn_menu.addEventListener("click", () => {
         if (catalog.classList.contains("anim-catalog-to")) {
-
-
             catalog.classList.remove("anim-catalog-to", "anim-catalog-back")
-            void catalog.offsetWidth;  // 触发 reflow，强制浏览器重绘
+            void catalog.offsetWidth;
             catalog.classList.add("anim-catalog-back")
         } else {
-
             catalog.classList.remove("anim-catalog-to", "anim-catalog-back")
-            void catalog.offsetWidth;  // 触发 reflow，强制浏览器重绘
+            void catalog.offsetWidth;
             catalog.classList.add("anim-catalog-to")
         }
     })
@@ -525,6 +531,10 @@ loadedAssemblies = GetStorageFileAssemblies(typeName).Result;
     }
 
     function readData(callBack) {
+        if (window.location.protocol === "file:") {
+            callBack(datas)
+            return
+        }
         fetch('data/BehaviorTreeDocument.json') // 'data.json' 是 JSON 文件相对于 index.html 的路径
             .then(response => response.json())
             .then(data => {
@@ -535,11 +545,11 @@ loadedAssemblies = GetStorageFileAssemblies(typeName).Result;
             });
     }
 
-    readData((data)=>{
+    readData((data) => {
         let anchors = generateContent(data)
         generateLeftCatalog(anchors)
     })
-    
+
 
 
 </script>
