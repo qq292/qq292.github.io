@@ -505,9 +505,9 @@ loadedAssemblies = GetStorageFileAssemblies(typeName).Result;
         }
     }
 
-    function generateContent(data) {
+    function generateContent(datas) {
         let anchors = []
-        for (let [i, data] of data.entries()) {
+        for (let [i, data] of datas.entries()) {
             let p = document.createElement("p")
             let h1 = document.createElement("h1")
             let span = document.createElement("span")
@@ -528,25 +528,17 @@ loadedAssemblies = GetStorageFileAssemblies(typeName).Result;
         fetch('data/BehaviorTreeDocument.json') // 'data.json' 是 JSON 文件相对于 index.html 的路径
             .then(response => response.json())
             .then(data => {
-                // 在这里处理 JSON 数据
-                callBack(JSON.parse(data)); // 例如，将数据打印到控制台
-                // displayData(data); // 调用函数来显示数据
+                callBack(data);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
-                document.getElementById('data-container').textContent = 'Failed to load data.'; // 显示错误信息
             });
-
-
-
     }
 
     readData((data)=>{
-        console.log(data)
         let anchors = generateContent(data)
         generateLeftCatalog(anchors)
     })
-    // let anchors = getAnchoor()
     
 
 
