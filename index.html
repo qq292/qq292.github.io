@@ -329,7 +329,8 @@
 </style>
 
 <body>
-    <div id="error404" style="display: none;position:fixed;width: 100vw;height: 100vh;background-color: azure;justify-content: center;align-items: center;top:0px;left: 0px;z-index: 999999;">
+    <div id="error404"
+        style="display: none;position:fixed;width: 100vw;height: 100vh;background-color: azure;justify-content: center;align-items: center;top:0px;left: 0px;z-index: 999999;">
         <p style="font-size: 2.2rem;">找不到页面！</p>
     </div>
     <div class="toolBar">
@@ -367,23 +368,32 @@
     </div>
 </body>
 <script>
-    const datas = [ ]
+    const datas = [
+    ]
 </script>
 <script>
 
-    function __to_json(){
+    function __to_json() {
         console.log(JSON.stringify(datas))
     }
 
     // __to_json()
 
-    var catalog_ul
+
+
+    function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+
     window.onload = function () {
         let lis = document.querySelectorAll(".catalog ul li")
         for (let li of lis) {
             li.addEventListener("click", () => {
-                if (window.matchMedia('(max-width: 1350px)').matches) {
+                
+                if (window.matchMedia('(max-width: 1350px)').matches || isMobileDevice()) {
                     playCatalogAnimation("to")
+
                 }
             })
         }
