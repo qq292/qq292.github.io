@@ -386,18 +386,8 @@
     }
 
 
-    window.onload = function () {
-        let lis = document.querySelectorAll(".catalog ul li")
-        for (let li of lis) {
-            li.addEventListener("click", () => {
-                
-                if (window.matchMedia('(max-width: 1350px)').matches || isMobileDevice()) {
-                    playCatalogAnimation("to")
 
-                }
-            })
-        }
-    }
+
     var error404 = document.querySelector("#error404")
     var catalog_ul = document.querySelector(".catalog ul")
     var catalog = document.querySelector(".catalog")
@@ -427,6 +417,16 @@
         return document.querySelectorAll("*[id^='anchor']")
     }
 
+    //目录项目点击事件
+    function catalogItemClicked() {
+
+        if (window.matchMedia('(max-width: 1350px)').matches || isMobileDevice()) {
+            playCatalogAnimation("to")
+
+        }
+
+    }
+
     //生成目录
     function generateLeftCatalog(anchors) {
         for (let anchor of anchors) {
@@ -435,6 +435,7 @@
             a.textContent = anchor.dataset.anchorTitle
             a.href = "#" + anchor.id
             li.appendChild(a)
+            li.onclick=catalogItemClicked
             catalog_ul.appendChild(li)
         }
     }
@@ -455,6 +456,14 @@
             content.appendChild(h1)
             content.appendChild(p)
         }
+        //移动端不显示代码行号
+        if(isMobileDevice()){
+            for(let code of document.querySelectorAll(".content code")){
+                code.classList.remove("line-numbers")
+            }
+
+        }
+
         return anchors
 
     }
@@ -484,6 +493,7 @@
     readData((data) => {
         let anchors = generateContent(data)
         generateLeftCatalog(anchors)
+
         Prism.highlightAll()
     })
 
