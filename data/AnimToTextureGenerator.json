@@ -5,7 +5,7 @@
         },
     {
         "title":"注意",
-        "content":"注意的地方"
+        "content":"<table>\n<thead>\n<tr>\n<th>Ability</th>\n<th>Input Bind</th>\n<th>Predicted</th>\n<th>C++ / Blueprint</th>\n<th>Description</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Jump</td>\n<td>Space Bar</td>\n<td>Yes</td>\n<td>C++</td>\n<td>Makes the hero jump.</td>\n</tr>\n<tr>\n<td>Gun</td>\n<td>Left Mouse Button</td>\n<td>No</td>\n<td>C++</td>\n<td>Fires a projectile from the hero's gun. The animation is predicted but the projectile is not.</td>\n</tr>\n<tr>\n<td>Aim Down Sights</td>\n<td>Right Mouse Button</td>\n<td>Yes</td>\n<td>Blueprint</td>\n<td>While the button is held, the hero will walk slower and the camera will zoom in to allow more precise shots with the gun.</td>\n</tr>\n<tr>\n<td>Sprint</td>\n<td>Left Shift</td>\n<td>Yes</td>\n<td>Blueprint</td>\n<td>While the button is held, the hero will run faster draining stamina.</td>\n</tr>\n<tr>\n<td>Forward Dash</td>\n<td>Q</td>\n<td>Yes</td>\n<td>Blueprint</td>\n<td>The hero dashes forward at the cost of stamina.</td>\n</tr>\n<tr>\n<td>Passive Armor Stacks</td>\n<td>Passive</td>\n<td>No</td>\n<td>Blueprint</td>\n<td>Every 4 seconds the hero gains a stack of armor up to a maximum of 4 stacks. Receiving damage removes one stack of armor.</td>\n</tr>\n<tr>\n<td>Meteor</td>\n<td>R</td>\n<td>No</td>\n<td>Blueprint</td>\n<td>Player targets a location to drop a meteor on the enemies causing damage and stunning them. The targeting is predicted while spawning the meteor is not.</td>\n</tr>\n</tbody></table>\n"
     }
 
 
