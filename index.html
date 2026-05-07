@@ -205,7 +205,18 @@
         display: none;
     }
 
-    table th, 
+table {
+    width: 100%;
+    border-collapse: collapse; /* 关键：合并边框，否则会有双线 */
+    margin: 20px 0;
+    font-size: 14px;
+    font-family: sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th, 
 table td {
     padding: 12px 15px;
     text-align: left;
