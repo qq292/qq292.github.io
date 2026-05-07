@@ -15,6 +15,10 @@
         margin: 0px;
         box-sizing: border-box;
     }
+    #titleh1{
+        color:#009879
+    }
+    
     ul, ol{
          list-style: none;
     }
@@ -497,6 +501,7 @@ table tr:hover {
             anchors.push(span)
             span.setAttribute("data-anchor-title", data.title)
             span.id = "anchor" + i
+            h1.id="titleh1"
             h1.textContent = data.title
             p.innerHTML = data.content
             content.appendChild(span)
