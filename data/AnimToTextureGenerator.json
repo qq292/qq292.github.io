@@ -1,7 +1,10 @@
 [
-  {"title":"Start","content":"\n## 待做事项\n1.  保存文件名字设置为文件名前缀\n2.  修理bug，菜单栏按钮获取当前窗口骨骼网格体2\n\n"},
   {
-    "title":"Precautions",
-    "content":"\n ### AnimToTextureGenerator Precautions"
+    "title": "Start",
+    "content": "\n### 1. 准备工作\n\n1. 前往 **Edit > Plugins**，搜索并启用 **Material Editing Library** 和 **Editor Scripting Utilities**。\n2. 创建一个 **Editor Utility Actor** 或 **Asset Action Utility** 类型的蓝图。\n\n### 2. 常用操作节点 (Editor Only)\n\n- **Create Material Expression**: 在材质中创建一个新的表达式节点（如 Texture Sample, Multiply, Add 等）。\n- **Connect Material Expressions**: 将一个节点的输出引脚连接到另一个节点的输入引脚。\n- **Connect Material Property**: 将节点的输出直接连接到材质的主节点（根节点），如 Base Color, Metallic 等。\n- **Delete Material Expression**: **消除 (Elimination)** 材质中不再需要的节点。\n- **Layout Material Expressions**: 自动排列节点位置，使图表看起来更整洁。\n"
+  },
+  {
+    "title": "Precautions",
+    "content": "\n[插件文档](https://qq292.github.io/?n=AnimToTextureGenerator#anchor0)\n\n"
   }
 ]
