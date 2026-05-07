@@ -480,6 +480,7 @@
         }
 
         let articleName = getParameterByName('n')
+        document.title = articleName
         if (!articleName) { error404.style.display = 'flex'; return }
         // BehaviorTreeDocument
         fetch(`data/${articleName}.json`) // 'data.json' 是 JSON 文件相对于 index.html 的路径
