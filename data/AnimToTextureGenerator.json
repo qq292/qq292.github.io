@@ -1,13 +1,21 @@
 [
     {
+        "title":"AnimToTextureGenerator",
+        "content":"<p>A one-click Unreal Engine plugin to convert Skeletal Mesh animations into Vertex Animation Textures (VAT).</p>\n"
+    }
+    {
         "title":"Getting Started – Install & Use",
-        "content":"<h2>1. Install the Plugin</h2>\n<ul>\n<li>Copy to <code>Plugins/</code></li>\n<li>Enable in Plugins window</li>\n<li>Restart Editor</li>\n</ul>\n<h2>2. Open the Tool</h2>\n<ul>\n<li>Open Skeletal Mesh</li>\n<li>Click \"Make Vertex Animation (VAT)\"</li>\n</ul>\n<h2>3. Generate VAT</h2>\n<ul>\n<li>Select Animations</li>\n<li>Click Generate</li>\n</ul>\n"
-        },
+        "content":"<h2>1. Install the Plugin</h2>\n<ul>\n<li>Copy to <code>Plugins/</code></li>\n<li>Enable in Plugins window</li>\n<li>Restart Editor</li>\n</ul>\n<h2>2. Open the Tool</h2>\n<ul>\n<li>Open Skeletal Mesh</li>\n<li>Click \"Make Vertex Animation\"</li>\n</ul>\n<h2>3. Generate VAT</h2>\n<ul>\n<li>Select Animations</li>\n<li>Click Generate</li>\n</ul>\n"
+    },
+    
     {
         "title":"Important Notes",
-        "content":"<table>\n<thead>\n<tr>\n<th>Important Notes</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>This plugin is <strong>Editor-only</strong> and has <strong>no runtime cost</strong>.</td>\n</tr>\n<tr>\n<td>Requires <strong>Unreal Engine 5.7 or later</strong>.</td>\n</tr>\n<tr>\n<td>Skeletal Meshes must have valid <strong>Animation Sequences</strong>.</td>\n</tr>\n<tr>\n<td>VAT generation may take time for high-frame animations.</td>\n</tr>\n<tr>\n<td><code>AnimToTexture</code> plugin must be enabled.</td>\n</tr>\n<tr>\n<td>Supported languages: <strong>English / Chinese</strong>.</td>\n</tr>\n</tbody></table>\n"
+        "content":"<table>\n<thead>\n<tr>\n<th>Item</th>\n<th>Description</th>\n</tr>\n</thead>\n<tbody><tr>\n<td><strong>Generated Assets</strong></td>\n<td>When generating VAT, the plugin creates the following in the specified directory:</td>\n</tr>\n<tr>\n<td></td>\n<td>• <code>BoneTexture/</code> – bone animation textures</td>\n</tr>\n<tr>\n<td></td>\n<td>• <code>MaterialIns/</code> – material instances</td>\n</tr>\n<tr>\n<td></td>\n<td>• <code>Materials/</code> – materials</td>\n</tr>\n<tr>\n<td></td>\n<td>• <code>AnimToTextureDataAsset</code></td>\n</tr>\n<tr>\n<td></td>\n<td>• Static Mesh assets</td>\n</tr>\n<tr>\n<td><strong>Modify Parameters</strong></td>\n<td>Adjust settings (animation sequences, texture max size, etc.) <strong>inside the generated <code>AnimToTextureDataAsset</code></strong></td>\n</tr>\n<tr>\n<td><strong>Regenerate Assets</strong></td>\n<td>1. Right-click the DataAsset in the Content Browser<br>2. Click <strong>Run AnimToTexture</strong><br>3. Assets will be regenerated</td>\n</tr>\n<tr>\n<td><strong>Editor Only</strong></td>\n<td>This plugin is Editor-only and has no runtime cost</td>\n</tr>\n<tr>\n<td><strong>Requirements</strong></td>\n<td>• Skeletal Mesh with valid Animation Sequences<br>• <code>AnimToTexture</code> plugin enabled</td>\n</tr>\n<tr>\n<td><strong>Supported Languages</strong></td>\n<td>English / Chinese</td>\n</tr>\n</tbody></table>\n"
+    },
+    {
+        "title":"Preview",
+        "content":"<h2>预览 VAT 动画</h2>\n<ol>\n<li>创建一个继承自 <strong>BP_PreviewActor</strong> 的 Actor</li>\n<li>打开该 Actor</li>\n<li>将生成的 <strong>AnimToTextureDataAsset</strong> 拖入 <strong>DataAsset</strong> 变量</li>\n<li>设置动画 Index</li>\n<li>即可在编辑器视口中预览 VAT 动画</li>\n</ol>\n"
     }
-
 
     
 ]
