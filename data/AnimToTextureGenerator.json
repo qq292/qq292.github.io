@@ -13,8 +13,8 @@
         "content":"<table>\n<thead>\n<tr>\n<th>Item</th>\n<th>Description</th>\n</tr>\n</thead>\n<tbody><tr>\n<td><strong>Generated Assets</strong></td>\n<td>When generating VAT, the plugin creates the following in the specified directory:</td>\n</tr>\n<tr>\n<td></td>\n<td>• <code>BoneTexture/</code> – bone animation textures</td>\n</tr>\n<tr>\n<td></td>\n<td>• <code>MaterialIns/</code> – material instances</td>\n</tr>\n<tr>\n<td></td>\n<td>• <code>Materials/</code> – materials</td>\n</tr>\n<tr>\n<td></td>\n<td>• <code>AnimToTextureDataAsset</code></td>\n</tr>\n<tr>\n<td></td>\n<td>• Static Mesh assets</td>\n</tr>\n<tr>\n<td><strong>Modify Parameters</strong></td>\n<td>Adjust settings (animation sequences, texture max size, etc.) <strong>inside the generated <code>AnimToTextureDataAsset</code></strong></td>\n</tr>\n<tr>\n<td><strong>Regenerate Assets</strong></td>\n<td>1. Right-click the DataAsset in the Content Browser<br>2. Click <strong>Run AnimToTexture</strong><br>3. Assets will be regenerated</td>\n</tr>\n<tr>\n<td><strong>Editor Only</strong></td>\n<td>This plugin is Editor-only and has no runtime cost</td>\n</tr>\n<tr>\n<td><strong>Requirements</strong></td>\n<td>• Skeletal Mesh with valid Animation Sequences<br>• <code>AnimToTexture</code> plugin enabled</td>\n</tr>\n<tr>\n<td><strong>Supported Languages</strong></td>\n<td>English / Chinese</td>\n</tr>\n</tbody></table>\n"
     },
     {
-        "title":"Preview",
-        "content":"<h2>预览 VAT 动画</h2>\n<ol>\n<li>创建一个继承自 <strong>BP_PreviewActor</strong> 的 Actor</li>\n<li>打开该 Actor</li>\n<li>将生成的 <strong>AnimToTextureDataAsset</strong> 拖入 <strong>DataAsset</strong> 变量</li>\n<li>设置动画 Index</li>\n<li>即可在编辑器视口中预览 VAT 动画</li>\n</ol>\n"
+        "title":"Preview VAT in Editor",
+        "content":"<ol>\n<li>Create an Actor derived from <code>BP_PreviewActor</code></li>\n<li>Assign the generated <code>AnimToTextureDataAsset</code> to the <strong>DataAsset</strong> property</li>\n<li>Adjust the <strong>Animation Index</strong> to select the animation</li>\n<li>The VAT animation will be previewed in the editor viewport</li>\n</ol>\n"
     }
 
     
