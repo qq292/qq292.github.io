@@ -205,6 +205,37 @@
         display: none;
     }
 
+    #content th, 
+#content td {
+    padding: 12px 15px;
+    text-align: left;
+    /* 关键修改：添加右边框 */
+    border-bottom: 1px solid #dddddd;
+    border-right: 1px solid #dddddd; 
+}
+
+/* 去掉每一列最后一根的右边框，防止表格整体多出一根线 */
+#content th:last-child,
+#content td:last-child {
+    border-right: none;
+}
+
+/* 表头样式 */
+#content th {
+    background-color: #009879;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* 斑马纹 */
+#content tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+/* 悬停 */
+#content tbody tr:hover {
+    background-color: #f1f1f1;
+}
 
 
     .toolBar {
