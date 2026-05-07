@@ -2,7 +2,7 @@
     {
         "title":"AnimToTextureGenerator",
         "content":"<p>A one-click Unreal Engine plugin to convert Skeletal Mesh animations into Vertex Animation Textures (VAT).</p>\n"
-    }
+    },
     {
         "title":"Getting Started – Install & Use",
         "content":"<h2>1. Install the Plugin</h2>\n<ul>\n<li>Copy to <code>Plugins/</code></li>\n<li>Enable in Plugins window</li>\n<li>Restart Editor</li>\n</ul>\n<h2>2. Open the Tool</h2>\n<ul>\n<li>Open Skeletal Mesh</li>\n<li>Click \"Make Vertex Animation\"</li>\n</ul>\n<h2>3. Generate VAT</h2>\n<ul>\n<li>Select Animations</li>\n<li>Click Generate</li>\n</ul>\n"
