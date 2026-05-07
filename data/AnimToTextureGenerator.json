@@ -1,5 +1,5 @@
 [
-  {"title":"Start","content":"\n## 待做事项\n1.  保存文件名字设置为文件名前缀\n2.  修理bug，菜单栏按钮获取当前窗口骨骼网格体2\n\n""},
+  {"title":"Start","content":"\n## 待做事项\n1.  保存文件名字设置为文件名前缀\n2.  修理bug，菜单栏按钮获取当前窗口骨骼网格体2\n\n"},
   {
     "title":"Precautions",
     "content":"\n ### AnimToTextureGenerator Precautions"
