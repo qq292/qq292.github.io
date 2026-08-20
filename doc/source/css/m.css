@@ -1,0 +1,1010 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+hr {
+    border: none; /* 先清除默认边框 */
+    border-top: 1px solid var(--border-color); /* 自定义线条样式 */
+    margin: 2em 0; /* 上下间距 */
+}
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0; /* 可选，清除上下外边距 */
+}
+/* 无表头表格 */
+table:not(:has(thead th:not(:empty))) thead {
+    display: none;
+}
+table:not(:has(thead th:not(:empty))) td {
+    padding: 4px;
+}
+
+/* a标签默认样式 */
+a {
+    color: #1a73e8;
+    text-decoration: none;
+    outline: none;
+}
+
+a:hover {
+    color: #1557b0;
+}
+/* 标题默认样式 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 600;
+    padding: 10px 0px;
+}
+
+/* 滚动条默认样式 */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background-image: var(--linear-001);
+    border-radius: 5px;
+}
+
+.scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* 让 Mermaid xyChart 的背景透明，继承页面背景色 */
+.mermaid svg[aria-roledescription="xychart"] {
+    background-color: var(--bg-content);
+}
+
+/* 隐藏 Mermaid 内部的白色背景矩形 */
+.mermaid svg[aria-roledescription="xychart"] g.main rect.background {
+    opacity: 0;
+}
+
+/* 坐标轴文字颜色跟随主题 */
+.mermaid svg[aria-roledescription="xychart"] g.bottom-axis text,
+.mermaid svg[aria-roledescription="xychart"] g.left-axis text,
+.mermaid svg[aria-roledescription="xychart"] g.chart-title text,
+.mermaid svg[aria-roledescription="pie"] g text.pieTitleText,
+.mermaid svg[aria-roledescription="pie"] g g text {
+    fill: var(--text-primary) !important;
+}
+
+/* 坐标轴线条颜色 */
+.mermaid svg[aria-roledescription="xychart"] g.bottom-axis path,
+.mermaid svg[aria-roledescription="xychart"] g.left-axis path {
+    stroke: var(--border-color) !important;
+}
+
+/* 网格线颜色 */
+.mermaid svg[aria-roledescription="xychart"] g.plot line {
+    stroke: var(--border-color) !important;
+}
+
+/* 标题颜色 */
+.mermaid svg[aria-roledescription="xychart"] text.chart-title {
+    fill: var(--text-primary) !important;
+}
+
+/* ===== 主题变量：亮色模式（默认） ===== */
+:root,
+[data-theme="light"] {
+    --tool-height: 40px;
+    --h1-height: 42px;
+    --catalog-width: 360px;
+    --anim-catalog-width: calc(-1 * var(--catalog-width));
+    --linear-001: linear-gradient(
+        45deg,
+        white 0%,
+        deeppink 40%,
+        skyblue 60%,
+        white 100%
+    );
+    --green-01: #3da33d;
+
+    /* 背景色 */
+    --bg-body: #e6e6e6;
+    --bg-catalog: #ffffff;
+    --bg-content: #ffffff;
+    --bg-toolbar: #f7f7f7;
+    --bg-hover: #20252329;
+    --bg-table-stripe: #f8f9fc;
+    --bg-table-hover: #eef2ff;
+    --bg-blockquote: linear-gradient(135deg, #eef3fb, #f8f9fa);
+    --bg-code-summary: #3a3c40;
+    --bg-code-block: #222222;
+    --bg-checkbox: #ffffff;
+
+    /* 文字色 */
+    --text-primary: #22272e;
+    --text-secondary: #444444;
+    --text-link: #000000;
+    --text-link-active: #3da33d;
+    --text-code: #f7f7f7;
+    --text-table-header: #ffffff;
+    --text-toc-hover: #3da33d;
+
+    /* 边框/分割线 */
+    --border-color: #d0d0d0;
+    --border-table: #e8e8e8;
+    --border-blockquote: #d6e4f0;
+    --border-code: #453e3e;
+    --border-table-header: #5a6fd6;
+    --border-color-code: #d0d0d0;
+
+    /* 阴影 */
+    --shadow-content: 0 0 2px gray;
+    --shadow-blockquote-hover: 0 4px 16px rgba(74, 144, 217, 0.12);
+
+    /* 列表标记色 */
+    --list-marker: #4a90d9;
+    --list-marker-hover: linear-gradient(135deg, #aa1717, #e51313);
+    --list-number-bg: #4a90d9;
+    --list-number-shadow: #eef3fb;
+
+    /* 滚动条 */
+    --scrollbar-track: #f0f0f0;
+    --scrollbar-thumb: #868585;
+
+    /* 其他 */
+    --error-bg: azure;
+}
+
+/* ===== 主题变量：暗色模式 ===== */
+[data-theme="dark"] {
+    --tool-height: 40px;
+    --h1-height: 42px;
+    --catalog-width: 340px;
+    --anim-catalog-width: calc(-1 * var(--catalog-width));
+    --linear-001: linear-gradient(
+        45deg,
+        #2a2a2a 0%,
+        #6b2a35 40%,
+        #2d5f8a 60%,
+        #2a2a2a 100%
+    );
+    --green-01: #5ec95e;
+
+    /* 背景色 — 中性深灰，去掉蓝色调 */
+    --bg-body: #1a1a1a;
+    --bg-catalog: #222222;
+    --bg-content: #252525;
+    --bg-toolbar: #222222;
+    --bg-hover: rgba(255, 255, 255, 0.06);
+    --bg-table-stripe: #222222;
+    --bg-table-hover: #2a2a2a;
+    --bg-blockquote: linear-gradient(135deg, #252525, #222222);
+    --bg-code-summary: #1e1e1e;
+    --bg-code-block: #1a1a1a;
+    --bg-checkbox: #252525;
+
+    /* 文字色 — 暖白，不刺眼 */
+    --text-primary: #d4d4d4;
+    --text-secondary: #a8a8a8;
+    --text-link: #c5c8d4;
+    --text-link-active: #5ec95e;
+    --text-code: #d4d4d4;
+    --text-table-header: #e0e0e0;
+    --text-toc-hover: #5ec95e;
+
+    /* 边框/分割线 — 中性灰 */
+    --border-color: #333333;
+    --border-table: #333333;
+    --border-blockquote: #333333;
+    --border-code: #333333;
+    --border-table-header: #444444;
+    --border-color-code: #4a4a4a; /* 阴影 */
+    --shadow-content: 0 0 4px rgba(0, 0, 0, 0.4);
+    --shadow-blockquote-hover: 0 4px 16px rgba(0, 0, 0, 0.3);
+
+    /* 列表标记色 */
+    --list-marker: #3a7bd5;
+    --list-marker-hover: linear-gradient(135deg, #c0392b, #e74c3c);
+    --list-number-bg: #3a7bd5;
+    --list-number-shadow: #1a1a1a;
+
+    /* 滚动条 */
+    --scrollbar-track: #1a1a1a;
+    --scrollbar-thumb: #4a4a4a;
+
+    /* 其他 */
+    --error-bg: #222222;
+}
+
+/* ===== 全局变量过渡动画 ===== */
+
+.catalog li a,
+.catalog li .toc-item-wrapper,
+.theme-toggle,
+.content a,
+.code-summary,
+.code-block,
+.toc-toggle,
+.toolBar {
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+/* 排除不需要过渡的元素（如动画中的目录） */
+.anim-catalog-to,
+.anim-catalog-back {
+    transition: none !important;
+}
+
+.red {
+    background-color: red;
+}
+.green {
+    background-color: green;
+}
+.pink {
+    background-color: pink;
+}
+.gray {
+    background-color: gray;
+}
+
+body {
+    height: auto;
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    height: calc(100vh - var(--tool-height));
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.catalog li a {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--text-link);
+    width: 100%;
+    height: 100%;
+    font-size: small;
+}
+
+.catalog li .toc-item-wrapper:hover a {
+    color: var(--text-link-active);
+}
+
+.catalog li .toc-item-wrapper:hover {
+    background-color: var(--bg-hover);
+}
+
+.content-box {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: var(--bg-body);
+}
+
+.active a {
+    color: var(--text-link-active) !important;
+}
+
+.catalog {
+    background-color: var(--bg-catalog);
+    height: 100%;
+    width: var(--catalog-width);
+    border-right: 1px solid var(--border-color);
+    position: absolute;
+    top: 0;
+    z-index: 1000;
+    padding: 1rem 0.2rem 1rem 1.4rem;
+}
+
+.scroll-smooth {
+    scroll-behavior: smooth;
+}
+
+.content-article {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.content {
+    background-color: var(--bg-content);
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    font-size: medium;
+    line-height: 1.8rem;
+    color: var(--text-primary);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+img[height] {
+    height: attr(height px);
+}
+.hide {
+    display: none;
+}
+
+/* ===== 工具栏 ===== */
+.toolBar {
+    display: flex;
+    width: 100%;
+    height: var(--tool-height);
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-toolbar);
+    padding: 0px 10px;
+    z-index: 1000;
+}
+
+.toolBar-left,
+.toolBar-right,
+.toolBar-center {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.anim-catalog-to,
+.anim-catalog-back {
+    animation-duration: 0.15s;
+    animation-fill-mode: forwards;
+    animation-name: catalog-to;
+}
+
+.anim-catalog-back {
+    animation-direction: reverse;
+}
+
+#menu {
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 10%;
+    color: var(--text-primary);
+}
+
+#menu:hover {
+    background-color: rgba(111, 111, 111, 0.24);
+}
+
+@keyframes catalog-to {
+    0% {
+        transform: translateX(0px);
+    }
+    100% {
+        transform: translateX(var(--anim-catalog-width));
+    }
+}
+
+.toolBar-right-group1 {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ===== 暗色模式切换按钮 ===== */
+.theme-toggle {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    border-radius: 12px;
+    background-color: var(--border-color);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    transition: background-color 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background-color: var(--border-table-header);
+}
+
+.theme-toggle::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition:
+        transform 0.3s ease,
+        background-color 0.3s ease;
+}
+
+[data-theme="dark"] .theme-toggle::before {
+    transform: translateX(20px);
+    background-color: #f5c542;
+}
+
+/* 太阳和月亮图标 */
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    line-height: 1;
+    transition: opacity 0.3s ease;
+}
+
+.theme-toggle .icon-sun {
+    left: 5px;
+    color: #f5c542;
+    opacity: 1;
+}
+
+.theme-toggle .icon-moon {
+    right: 5px;
+    color: #a0a8b8;
+    opacity: 0.5;
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+    opacity: 0.5;
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+    opacity: 1;
+}
+
+/* ===== 表格 ===== */
+table:not(.hljs-ln) {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    font-size: 0.92rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+table:not(.hljs-ln) th {
+    background: var(--border-table-header);
+    color: var(--text-table-header);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border: 1px solid var(--border-table);
+}
+
+table:not(.hljs-ln) td {
+    padding: 11px 16px;
+    text-align: left;
+    border: 1px solid var(--border-table);
+    transition: background-color 0.2s ease;
+    color: var(--text-primary);
+}
+
+table:not(.hljs-ln) tr:nth-child(even) {
+    background-color: var(--bg-table-stripe);
+}
+
+table:not(.hljs-ln) tr:hover {
+    background-color: var(--bg-table-hover);
+}
+
+/* ===== 代码块 ===== */
+
+.code-details {
+    border: 1px solid var(--border-color-code);
+    border-radius: 6px;
+    background-color: initial;
+    contain: content;
+    will-change: contents;
+    margin-bottom: 1rem;
+}
+/* 折叠状态 */
+.code-details:not([open]) .pre {
+    content-visibility: hidden;
+}
+/* 未折叠状态 */
+.code-details[open] .pre {
+    content-visibility: 9999px;
+}
+.code-summary {
+    position: sticky;
+    top: -1rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    cursor: pointer;
+    user-select: none;
+
+    border-bottom: 1px solid #85878775;
+    border-radius: 6px;
+}
+
+.code-details[open] .code-summary {
+    border-radius: 6px 6px 0px 0px !important;
+}
+
+summary::marker {
+    content: "";
+}
+
+.code-block {
+    display: block;
+    overflow-x: scroll;
+    white-space: pre;
+}
+
+.code-block::-webkit-scrollbar {
+    height: 8px;
+}
+
+.code-block::-webkit-scrollbar-thumb {
+    background: var(--linear-001);
+    border-radius: 5px;
+}
+
+.code-block::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 5px;
+}
+
+.code-block::-webkit-scrollbar-thumb:hover {
+    background-image: var(--linear-001);
+    cursor: pointer;
+}
+
+.mermaid {
+    padding: 10px 0px;
+}
+
+.active {
+    color: #0eb340 !important;
+}
+
+/* ===== 有序列表 ===== */
+.content ol {
+    counter-reset: list-counter;
+    padding-left: 0;
+    margin: 1.5em 0;
+    position: relative;
+}
+
+.content ol::before {
+    content: "";
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--list-marker), #a8d0f5);
+    border-radius: 1px;
+}
+
+.content ol > li {
+    counter-increment: list-counter;
+    list-style: none;
+    position: relative;
+    padding: 12px 14px 12px 48px;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+}
+
+.content ol > li::before {
+    content: counter(list-counter);
+    position: absolute;
+    left: 4px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--list-number-bg);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--list-number-shadow);
+    z-index: 1;
+}
+
+.content ol > li::after {
+    content: "";
+    position: absolute;
+    left: 48px;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    border-left: 1px dashed var(--border-table);
+}
+
+/* ===== 无序列表 ===== */
+.content ul:not(.contains-task-list) {
+    padding-left: 0;
+    margin: 0.5em 0;
+}
+
+.content ul:not(.contains-task-list) > li {
+    list-style: none;
+    position: relative;
+    padding-left: 2rem;
+    border-radius: 8px;
+    color: var(--text-primary);
+}
+
+.content ul:not(.contains-task-list) li + li {
+    margin-top: 0.2em;
+}
+
+.content ul:not(.contains-task-list) > li:hover::before {
+    background: var(--list-marker-hover);
+}
+
+.content ul:not(.contains-task-list) > li::before {
+    content: "";
+    position: absolute;
+    left: 14px;
+    top: 0.7em; /* 改为顶部偏移，与文字顶部对齐 */
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, var(--list-marker), #357abd);
+    border-radius: 2px;
+    transform: rotate(45deg); /* 只保留旋转，去掉 translateY */
+}
+
+/* ===== 文本引用 ===== */
+.content blockquote {
+    margin: 1.2em 0;
+    padding: 14px 18px 14px 48px;
+    background: var(--bg-blockquote);
+    border: 1px solid var(--border-blockquote);
+    border-radius: 10px;
+    color: var(--text-secondary);
+    font-size: 0.95em;
+    position: relative;
+    transition: box-shadow 0.2s;
+}
+
+.content blockquote:hover {
+    box-shadow: var(--shadow-blockquote-hover);
+}
+
+.content blockquote::before {
+    content: "i";
+    position: absolute;
+    left: 14px;
+    top: 14px;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    font-style: italic;
+    font-family: Georgia, serif;
+    color: #fff;
+    background: var(--list-marker);
+    border-radius: 50%;
+}
+
+.content blockquote p {
+    margin: 0.4em 0;
+    color: var(--text-primary);
+}
+
+.content blockquote p:first-child {
+    margin-top: 0;
+}
+
+.content blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* ===== 任务清单 ===== */
+.task-list-item-checkbox {
+    accent-color: var(--list-marker);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    background-color: var(--bg-checkbox);
+}
+
+.task-list-item-checkbox:checked {
+    accent-color: #0eb340;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 2400px) {
+    .content {
+        height: 100%;
+        width: 50%;
+        padding: 1rem 3.2rem 4rem;
+    }
+}
+
+@media (max-width: 1199px) {
+    .content {
+        height: 100%;
+        width: 80%;
+        padding: 1rem 2.2rem 4rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .content {
+        height: 100%;
+        width: 100%;
+        padding: 1rem 1.2rem 4rem;
+    }
+    .catalog {
+        width: 100%;
+    }
+    @keyframes catalog-to {
+        0% {
+            transform: translateX(0%);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+}
+
+/* ===== 折叠按钮 ===== */
+.catalog li {
+    position: relative;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    align-items: self-start;
+    flex-direction: column;
+}
+
+.toc-item-wrapper {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 6px;
+    border-radius: 6px;
+    width: 100%;
+}
+.toc-toggle {
+    position: absolute;
+    left: -10px;
+    top: 1px;
+    display: inline-block;
+    width: 18px;
+    cursor: pointer;
+    color: #999;
+    font-size: 12px;
+    user-select: none;
+    transition: color 0.2s;
+    flex-shrink: 0;
+}
+.toc-toggle:hover {
+    color: #0366d6;
+}
+.catalog ul ul {
+    padding-left: 1rem;
+    width: 100%;
+}
+
+.toc-toggle::before {
+    content: "▾";
+    cursor: pointer;
+    font-size: 16px;
+}
+
+li.collapsed .toc-toggle::before {
+    content: "▸";
+    font-size: 16px;
+}
+
+li.collapsed > ul {
+    display: none;
+}
+/* 1. 重置插件生成的表格容器 */
+.hljs-ln {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    margin: 0;
+    background: transparent; /* 防止表格背景遮挡代码块背景 */
+    tab-size: 5;
+    line-height: 1.5;
+}
+
+/* 2. 清除单元格默认样式 */
+.hljs .hljs-ln td,
+.hljs .hljs-ln tr {
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    vertical-align: top; /* 关键：防止行号与代码垂直不对齐 */
+}
+
+/* 3. 代码行号列样式 */
+.hljs .hljs-ln .hljs-ln-numbers {
+    text-align: right;
+    color: #6e7681; /* 行号颜色，可根据暗色模式调整 */
+    user-select: none; /* 防止复制代码时选中行号 */
+    width: 1px; /* 固定行号列宽度 */
+    display: table-cell;
+    border-right: 1px solid #44475a4f;
+    padding: 0px 4px;
+    color: #6272a4; /* 行号颜色（偏蓝灰，类似 VS Code） */
+    text-align: right;
+    user-select: none;
+}
+
+/* 4. 代码左右间距 */
+.hljs .hljs-ln .hljs-ln-code {
+    padding: 0px 6px;
+}
+
+/* 5. 控制隐藏代码行号 */
+.hide-line-numbers .hljs-ln .hljs-ln-numbers {
+    display: none;
+}
+
+/* 
+            代码渲染工具栏
+        */
+.code-number-btn {
+    background: transparent;
+    border: 0px;
+    position: relative;
+    width: 32px;
+    height: 32px;
+    /* 清除内部文字基线干扰 */
+    font-size: 0;
+    cursor: pointer;
+}
+
+.code-number-btn::before {
+    content: "\f785";
+    color: #0eb340;
+    font-family: "Font Awesome 6 Brands";
+    cursor: pointer;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hide-line-numbers .code-number-btn::before {
+    color: #9d9f9e;
+}
+
+/* ===== 脚注悬浮组件样式 ===== */
+.footnote-popover {
+    position: absolute;
+    z-index: 9999;
+    min-width: 180px;
+    padding: 12px 16px;
+    background: var(--bg-content);
+    border: 1px solid var(--border-color);
+    border-radius: 0 8px 8px 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+        opacity 0.2s,
+        transform 0.2s;
+    pointer-events: none;
+    overflow: visible; /* ← 外层改为 visible，允许箭头超出 */
+}
+
+/* 新增：内层负责滚动 */
+.popover-content {
+    max-width: 60vw;
+    max-height: 80vh; /* 按需调整最大高度 */
+    overflow-y: auto;
+}
+
+.footnote-popover.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.footnote-popover::before {
+    content: ""; /* ← 修正：原来是 "8"，应为空字符串 */
+    position: absolute;
+    top: -6px;
+    left: 20px;
+    width: 10px;
+    height: 10px;
+    background: var(--bg-content);
+    border-top: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+    transform: rotate(45deg) translate(-13px, 13px);
+    z-index: 1;
+}
+/* 隐藏原始脚注区域 和脚注线*/
+.footnotes-sep,
+.footnotes {
+    display: none;
+}
+
+/* 脚注引用上标样式 */
+.footnote-ref a {
+    color: #1a73e8;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.footnote-ref a:hover {
+    text-decoration: underline;
+}
+
+/* dialog 容器 */
+#loading {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    border: none;
+    border-radius: 8px;
+    background-color: transparent;
+    outline: none;
+    padding: 0;
+
+    /* 关键：固定尺寸 + flex 居中 */
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 遮罩层 */
+#loading::backdrop {
+    background: rgba(0, 0, 0, 0.358);
+}
+
+/* 加载条 */
+.loader {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e0e0e0;
+    border-top-color: #357abd;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+#loading:not([open]) {
+    display: none;
+}
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
