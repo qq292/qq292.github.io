@@ -3,20 +3,28 @@
     margin: 0px;
     box-sizing: border-box;
 }
+
 hr {
-    border: none; /* 先清除默认边框 */
-    border-top: 1px solid var(--border-color); /* 自定义线条样式 */
-    margin: 2em 0; /* 上下间距 */
+    border: none;
+    /* 先清除默认边框 */
+    border-top: 1px solid var(--border-color);
+    /* 自定义线条样式 */
+    margin: 2em 0;
+    /* 上下间距 */
 }
+
 ul {
     list-style-type: none;
     padding-left: 0;
-    margin: 0; /* 可选，清除上下外边距 */
+    margin: 0;
+    /* 可选，清除上下外边距 */
 }
+
 /* 无表头表格 */
 table:not(:has(thead th:not(:empty))) thead {
     display: none;
 }
+
 table:not(:has(thead th:not(:empty))) td {
     padding: 4px;
 }
@@ -31,6 +39,7 @@ a {
 a:hover {
     color: #1557b0;
 }
+
 /* 标题默认样式 */
 h1,
 h2,
@@ -104,13 +113,11 @@ h6 {
     --h1-height: 42px;
     --catalog-width: 360px;
     --anim-catalog-width: calc(-1 * var(--catalog-width));
-    --linear-001: linear-gradient(
-        45deg,
-        white 0%,
-        deeppink 40%,
-        skyblue 60%,
-        white 100%
-    );
+    --linear-001: linear-gradient(45deg,
+            white 0%,
+            deeppink 40%,
+            skyblue 60%,
+            white 100%);
     --green-01: #3da33d;
 
     /* 背景色 */
@@ -167,13 +174,11 @@ h6 {
     --h1-height: 42px;
     --catalog-width: 340px;
     --anim-catalog-width: calc(-1 * var(--catalog-width));
-    --linear-001: linear-gradient(
-        45deg,
-        #2a2a2a 0%,
-        #6b2a35 40%,
-        #2d5f8a 60%,
-        #2a2a2a 100%
-    );
+    --linear-001: linear-gradient(45deg,
+            #2a2a2a 0%,
+            #6b2a35 40%,
+            #2d5f8a 60%,
+            #2a2a2a 100%);
     --green-01: #5ec95e;
 
     /* 背景色 — 中性深灰，去掉蓝色调 */
@@ -204,7 +209,8 @@ h6 {
     --border-blockquote: #333333;
     --border-code: #333333;
     --border-table-header: #444444;
-    --border-color-code: #4a4a4a; /* 阴影 */
+    --border-color-code: #4a4a4a;
+    /* 阴影 */
     --shadow-content: 0 0 4px rgba(0, 0, 0, 0.4);
     --shadow-blockquote-hover: 0 4px 16px rgba(0, 0, 0, 0.3);
 
@@ -248,12 +254,15 @@ h6 {
 .red {
     background-color: red;
 }
+
 .green {
     background-color: green;
 }
+
 .pink {
     background-color: pink;
 }
+
 .gray {
     background-color: gray;
 }
@@ -338,9 +347,11 @@ img {
     max-width: 100%;
     height: auto;
 }
+
 img[height] {
     height: attr(height px);
 }
+
 .hide {
     display: none;
 }
@@ -391,6 +402,7 @@ img[height] {
     0% {
         transform: translateX(0px);
     }
+
     100% {
         transform: translateX(var(--anim-catalog-width));
     }
@@ -521,14 +533,17 @@ table:not(.hljs-ln) tr:hover {
     will-change: contents;
     margin-bottom: 1rem;
 }
+
 /* 折叠状态 */
 .code-details:not([open]) .pre {
     content-visibility: hidden;
 }
+
 /* 未折叠状态 */
 .code-details[open] .pre {
     content-visibility: 9999px;
 }
+
 .code-summary {
     position: sticky;
     top: -1rem;
@@ -604,7 +619,7 @@ summary::marker {
     border-radius: 1px;
 }
 
-.content ol > li {
+.content ol>li {
     counter-increment: list-counter;
     list-style: none;
     position: relative;
@@ -613,7 +628,7 @@ summary::marker {
     color: var(--text-primary);
 }
 
-.content ol > li::before {
+.content ol>li::before {
     content: counter(list-counter);
     position: absolute;
     left: 4px;
@@ -630,7 +645,7 @@ summary::marker {
     z-index: 1;
 }
 
-.content ol > li::after {
+.content ol>li::after {
     content: "";
     position: absolute;
     left: 48px;
@@ -646,7 +661,7 @@ summary::marker {
     margin: 0.5em 0;
 }
 
-.content ul:not(.contains-task-list) > li {
+.content ul:not(.contains-task-list)>li {
     list-style: none;
     position: relative;
     padding-left: 2rem;
@@ -654,24 +669,26 @@ summary::marker {
     color: var(--text-primary);
 }
 
-.content ul:not(.contains-task-list) li + li {
+.content ul:not(.contains-task-list) li+li {
     margin-top: 0.2em;
 }
 
-.content ul:not(.contains-task-list) > li:hover::before {
+.content ul:not(.contains-task-list)>li:hover::before {
     background: var(--list-marker-hover);
 }
 
-.content ul:not(.contains-task-list) > li::before {
+.content ul:not(.contains-task-list)>li::before {
     content: "";
     position: absolute;
     left: 14px;
-    top: 0.7em; /* 改为顶部偏移，与文字顶部对齐 */
+    top: 0.7em;
+    /* 改为顶部偏移，与文字顶部对齐 */
     width: 8px;
     height: 8px;
     background: linear-gradient(135deg, var(--list-marker), #357abd);
     border-radius: 2px;
-    transform: rotate(45deg); /* 只保留旋转，去掉 translateY */
+    transform: rotate(45deg);
+    /* 只保留旋转，去掉 translateY */
 }
 
 /* ===== 文本引用 ===== */
@@ -758,13 +775,16 @@ summary::marker {
         width: 100%;
         padding: 1rem 1.2rem 4rem;
     }
+
     .catalog {
         width: 100%;
     }
+
     @keyframes catalog-to {
         0% {
             transform: translateX(0%);
         }
+
         100% {
             transform: translateX(-100%);
         }
@@ -790,6 +810,7 @@ summary::marker {
     border-radius: 6px;
     width: 100%;
 }
+
 .toc-toggle {
     position: absolute;
     left: -10px;
@@ -803,9 +824,11 @@ summary::marker {
     transition: color 0.2s;
     flex-shrink: 0;
 }
+
 .toc-toggle:hover {
     color: #0366d6;
 }
+
 .catalog ul ul {
     padding-left: 1rem;
     width: 100%;
@@ -822,16 +845,18 @@ li.collapsed .toc-toggle::before {
     font-size: 16px;
 }
 
-li.collapsed > ul {
+li.collapsed>ul {
     display: none;
 }
+
 /* 1. 重置插件生成的表格容器 */
 .hljs-ln {
     border-collapse: collapse;
     border-spacing: 0;
     width: 100%;
     margin: 0;
-    background: transparent; /* 防止表格背景遮挡代码块背景 */
+    background: transparent;
+    /* 防止表格背景遮挡代码块背景 */
     tab-size: 5;
     line-height: 1.5;
 }
@@ -843,19 +868,24 @@ li.collapsed > ul {
     padding: 0;
     margin: 0;
     background: transparent;
-    vertical-align: top; /* 关键：防止行号与代码垂直不对齐 */
+    vertical-align: top;
+    /* 关键：防止行号与代码垂直不对齐 */
 }
 
 /* 3. 代码行号列样式 */
 .hljs .hljs-ln .hljs-ln-numbers {
     text-align: right;
-    color: #6e7681; /* 行号颜色，可根据暗色模式调整 */
-    user-select: none; /* 防止复制代码时选中行号 */
-    width: 1px; /* 固定行号列宽度 */
+    color: #6e7681;
+    /* 行号颜色，可根据暗色模式调整 */
+    user-select: none;
+    /* 防止复制代码时选中行号 */
+    width: 1px;
+    /* 固定行号列宽度 */
     display: table-cell;
     border-right: 1px solid #44475a4f;
     padding: 0px 4px;
-    color: #6272a4; /* 行号颜色（偏蓝灰，类似 VS Code） */
+    color: #6272a4;
+    /* 行号颜色（偏蓝灰，类似 VS Code） */
     text-align: right;
     user-select: none;
 }
@@ -918,13 +948,15 @@ li.collapsed > ul {
         opacity 0.2s,
         transform 0.2s;
     pointer-events: none;
-    overflow: visible; /* ← 外层改为 visible，允许箭头超出 */
+    overflow: visible;
+    /* ← 外层改为 visible，允许箭头超出 */
 }
 
 /* 新增：内层负责滚动 */
 .popover-content {
     max-width: 60vw;
-    max-height: 80vh; /* 按需调整最大高度 */
+    max-height: 80vh;
+    /* 按需调整最大高度 */
     overflow-y: auto;
 }
 
@@ -935,7 +967,8 @@ li.collapsed > ul {
 }
 
 .footnote-popover::before {
-    content: ""; /* ← 修正：原来是 "8"，应为空字符串 */
+    content: "";
+    /* ← 修正：原来是 "8"，应为空字符串 */
     position: absolute;
     top: -6px;
     left: 20px;
@@ -947,6 +980,7 @@ li.collapsed > ul {
     transform: rotate(45deg) translate(-13px, 13px);
     z-index: 1;
 }
+
 /* 隐藏原始脚注区域 和脚注线*/
 .footnotes-sep,
 .footnotes {
@@ -964,6 +998,16 @@ li.collapsed > ul {
     text-decoration: underline;
 }
 
+#loading-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+     align-items: center;
+    width: 200px;
+    height: auto;
+   
+}
+
 /* dialog 容器 */
 #loading {
     position: fixed;
@@ -978,8 +1022,8 @@ li.collapsed > ul {
     padding: 0;
 
     /* 关键：固定尺寸 + flex 居中 */
-    width: 80px;
-    height: 80px;
+    width: 300px;
+    height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -999,11 +1043,81 @@ li.collapsed > ul {
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
 }
+
 #loading:not([open]) {
     display: none;
 }
+
 @keyframes spin {
     to {
         transform: rotate(360deg);
     }
+}
+
+.language-select {
+    position: relative;
+    display: inline-block;
+    min-width: 80px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+/* 触发器（胶囊形状） */
+.language-trigger {
+    padding: 4px 1rem;
+    background-color: var(--bg-blockquote);
+    border-radius: 999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.2s;
+    user-select: none;
+}
+
+.language-trigger:hover {
+    opacity: 0.8;
+}
+
+.language-trigger .arrow {
+    font-size: 10px;
+    transition: transform 0.2s;
+}
+
+.language-select.open .arrow {
+    transform: rotate(180deg);
+}
+
+/* 下拉面板（可完全自定义） */
+.language-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--bg-blockquote);
+    border-radius: 12px;
+    padding: 4px 0;
+    min-width: 120px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+    z-index: 999;
+}
+
+.language-select.open .language-dropdown {
+    opacity: 1;
+    visibility: visible;
+}
+
+.language-dropdown div {
+    padding: 8px 16px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s;
+}
+
+.language-dropdown div:hover {
+    background: rgba(0, 0, 0, 0.06);
 }

@@ -1,6 +1,8 @@
 
 
-[English](blog/GASDocumentation-en.md) | 简体中文
+[lag]{简体中文}
+[简体中文]{blog/GASDocumentation-zh.md}
+[English]{blog/GASDocumentation-en.md}
 
 # GASDocumentation
 这里写的是我对虚幻引擎 5 的 GameplayAbilitySystem 插件 (GAS) 的理解，以及一个简单的多人示例项目。这不是官方文档，本项目和我本人都与 Epic Games 无关。我不保证这些信息的准确性。

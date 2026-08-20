@@ -1,6 +1,11 @@
 
-English | [简体中文](blog/GASDocumentation-zh.md)
 
+
+
+
+[lag]{English}
+[简体中文]{blog/GASDocumentation-zh.md}
+[English]{blog/GASDocumentation-en.md}
 
 # GASDocumentation
 My understanding of Unreal Engine 5's GameplayAbilitySystem plugin (GAS) with a simple multiplayer sample project. This is not official documentation and neither this project nor myself are affiliated with Epic Games. I make no guarantee for the accuracy of this information.

@@ -2,7 +2,7 @@
 
 
 
-[lag]{简体中文}
+[lag]{English}
 [简体中文]{README.md}
 [English]{README-en.md}
 [Deutsch]{README-de.md}
@@ -16,22 +16,25 @@
 
 ---
 
-## 你可能感兴趣的
-1. [GASDocumentation 中文](blog/GASDocumentation-zh.md)
-2. [GASDocumentation 英文](blog/GASDocumentation-en.md)
-3. [AnimToTextureGenerator 插件](https://www.fab.com/listings/15d6c399-885b-46c2-86e8-18b7ef6fddb3) [^anim]
+## You May Also Be Interested In
+
+
+1. [GASDocumentation Chinese](blog/GASDocumentation-zh.md)
+2. [GASDocumentation English](blog/GASDocumentation-en.md)
+3. [AnimToTextureGenerator Plugins](https://www.fab.com/listings/15d6c399-885b-46c2-86e8-18b7ef6fddb3) [^anim]
+
 
 
 
 |Markdown       |                        |
 |---------------|------------------------|
 |tagData        |`[tag]{data1,data2,data3, ...}`    |
-|基于`tagData`多语言支持 [^1]     |`[lag]{en}`<br>`[en]{en-url}`<br>`[zh]{zh-url}`<br>`[ja]{ja-url}`<br>......|
+|Multi‑language support based on `tagData` [^1]     |`[lag]{en}`<br>`[en]{en-url}`<br>`[zh]{zh-url}`<br>`[ja]{ja-url}`<br>......|
 
->  你选择我的时候，我也选择了你。<br>         —— 孤零零的工业革命
+> When you choose me, I choose you too.<br>         —— The Solitary Industrial Revolution
 
 
-[^1]:**`tagData`使用示例**：
+[^1]:**`tagData`Usage Example**：
     ```js
         function onTagData() {
             const select = document.getElementById("languageSelect");
@@ -76,7 +79,7 @@
 
 
 
-        
+
         ```
 
 ---
@@ -84,10 +87,11 @@
 
 
 
-[^anim]: **虚幻引擎插件**
-        <br>`AnimToTextureGenerator`是一款全自动顶点动画生成插件,
-        <br>它将繁琐的制作流程压缩到**3**步，整个过程耗时仅**3-5**秒钟,
-        <br>它可以帮你节省**8-15**天的工作时间。
+[^anim]: **Unreal Engine Plugin**
+        <br>`AnimToTextureGenerator` is a fully‑automated vertex animation generation plugin.
+        <br>It condenses the tedious production workflow into just **3 steps**, with the entire process taking only **3‑5 seconds**.
+        <br>It can save you **8‑15 days** of development time.
+
 
 
 

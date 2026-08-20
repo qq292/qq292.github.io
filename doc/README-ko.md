@@ -1,12 +1,11 @@
 
 
-
-
-[lag]{简体中文}
+[lag]{한국어}
 [简体中文]{README.md}
 [English]{README-en.md}
 [Deutsch]{README-de.md}
 [한국어]{README-ko.md}
+
 
 ---
 |||||
@@ -16,22 +15,22 @@
 
 ---
 
-## 你可能感兴趣的
-1. [GASDocumentation 中文](blog/GASDocumentation-zh.md)
-2. [GASDocumentation 英文](blog/GASDocumentation-en.md)
-3. [AnimToTextureGenerator 插件](https://www.fab.com/listings/15d6c399-885b-46c2-86e8-18b7ef6fddb3) [^anim]
+## 관심 있을 만한 내용
+1. [GASDocumentation 중국어](blog/GASDocumentation-zh.md)
+2. [GASDocumentation 영어](blog/GASDocumentation-en.md)
+3. [AnimToTextureGenerator 플러그인](https://www.fab.com/listings/15d6c399-885b-46c2-86e8-18b7ef6fddb3) [^anim]
 
 
 
 |Markdown       |                        |
 |---------------|------------------------|
 |tagData        |`[tag]{data1,data2,data3, ...}`    |
-|基于`tagData`多语言支持 [^1]     |`[lag]{en}`<br>`[en]{en-url}`<br>`[zh]{zh-url}`<br>`[ja]{ja-url}`<br>......|
+|`tagData` 기반 다국어 지원 [^1]     |`[lag]{en}`<br>`[en]{en-url}`<br>`[zh]{zh-url}`<br>`[ja]{ja-url}`<br>......|
 
->  你选择我的时候，我也选择了你。<br>         —— 孤零零的工业革命
+>  너가 나를 선택할 때, 나도 너를 선택한다.<br>         —— 고독한 산업혁명
 
 
-[^1]:**`tagData`使用示例**：
+[^1]:**`tagData` 사용 예시**：
     ```js
         function onTagData() {
             const select = document.getElementById("languageSelect");
@@ -77,17 +76,18 @@
 
 
         
+        
         ```
 
----
 
 
 
+[^anim]: **언리얼 엔진 플러그인**
+        <br>`AnimToTextureGenerator`는 완전 자동 정점 애니메이션 생성 플러그인으로,
+        <br>번거로운 제작 과정을 **3**단계로 압축하며, 전체 소요 시간은 단 **3~5**초입니다.
+        <br>이를 통해 **8~15**일의 작업 시간을 절약할 수 있습니다.
 
-[^anim]: **虚幻引擎插件**
-        <br>`AnimToTextureGenerator`是一款全自动顶点动画生成插件,
-        <br>它将繁琐的制作流程压缩到**3**步，整个过程耗时仅**3-5**秒钟,
-        <br>它可以帮你节省**8-15**天的工作时间。
+
 
 
 
