@@ -23,7 +23,6 @@
     <script src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script>
     <!-- md图片尺寸插件 -->
     <script src="https://cdn.jsdelivr.net/npm/markdown-it-imsize@2.0.1/dist/markdown-it-imsize.min.js"></script>
-    
   </head>
 
   <body>
@@ -231,6 +230,7 @@
 
     const params = new URLSearchParams(window.location.search);
     const targetUrl = params.get("url");
+    let isRoot = false;
     let fetchUrl;
     if (targetUrl) {
       // 本地环境下，如果目标不是本地地址，走 gmd 处理
@@ -247,17 +247,22 @@
     } else {
       // 没有 url 参数，默认加载同目录下的 README.md
       fetchUrl = new URL("README.md", window.location.href);
+      isRoot = true;
     }
 
     // 统一执行 fetch + render
     if (fetchUrl) {
       savePrefixion = simpleHash(fetchUrl);
       const response = await fetch(fetchUrl);
-      const markdownContent = await response.text();
+      let markdownContent = await response.text();
+
+      if (isRoot) {
+        const s = await makeUrlList();
+        markdownContent = s.join("<br>") + markdownContent;
+      }
+
       render(markdownContent);
     }
-
-
 
     const languageSelect = document.getElementById("languageSelect");
     const trigger = languageSelect.querySelector(".language-trigger");

@@ -60,7 +60,10 @@ function onTagData() {
   } else {
     select.style.display = "";
   }
-  const currentLag = tagData["lag"]!==undefined?tagData["lag"][0]:Object.values(tagData)[0][0];
+  const currentLag =
+    tagData["lag"] !== undefined
+      ? tagData["lag"][0]
+      : Object.values(tagData)[0][0];
   opstions.innerHTML = "";
   for (const [lag, url] of Object.entries(tagData)) {
     if (lag === "lag") {
@@ -71,7 +74,6 @@ function onTagData() {
     option.innerText = lag;
     if (currentLag === lag) {
       selected.innerHTML = currentLag;
-      
     }
     opstions.appendChild(option);
   }
@@ -166,16 +168,15 @@ function tagDataPlugin(md, options = {}) {
 export async function onLinkMD(targetUrl) {
   if (targetUrl) {
     if (window.location.hostname === "127.0.0.1") {
-        const hostname = new URL(targetUrl, window.location.href).hostname;
-        if (hostname === "127.0.0.1") {
-          savePrefixion = simpleHash(targetUrl);
-          const response = await fetch(targetUrl);
-          const markdownContent = await response.text();
-          render(markdownContent);
-        }else{
-            gmd(targetUrl);
-        }
-
+      const hostname = new URL(targetUrl, window.location.href).hostname;
+      if (hostname === "127.0.0.1") {
+        savePrefixion = simpleHash(targetUrl);
+        const response = await fetch(targetUrl);
+        const markdownContent = await response.text();
+        render(markdownContent);
+      } else {
+        gmd(targetUrl);
+      }
     } else {
       savePrefixion = simpleHash(targetUrl);
       const response = await fetch(targetUrl);
@@ -424,7 +425,7 @@ function setupScrollSpy() {
     });
   }
   // 初始执行一次
-//   update();
+  //   update();
 }
 // 恒定时间滚动
 function animateScroll(container, targetTop, duration) {
@@ -1029,8 +1030,7 @@ export function setMarkdownInstance(mdInstance, anchorPlugin, opts = {}) {
   return { md, tocItems };
 }
 
-
-window.getHitokoto =async function () {
+window.getHitokoto = async function () {
   try {
     const res = await fetch("https://v1.hitokoto.cn/");
     const json = await res.json();
@@ -1038,19 +1038,59 @@ window.getHitokoto =async function () {
   } catch (e) {
     return "保持热爱，奔赴山海";
   }
+};
+
+async function getBlogFiles() {
+  const owner = "qq292";
+  const repo = "qq292.github.io";
+  const branch = "master";
+
+  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`;
+  const resp = await fetch(apiUrl);
+
+  if (!resp.ok) {
+    throw new Error(`GitHub API 错误 status:${resp.status}`);
+  }
+  const json = await resp.json();
+
+  const mdFiles = [];
+  for (const node of json.tree) {
+    if (
+      node.type === "blob" &&
+      node.path.startsWith("doc/") &&
+      node.path.endsWith(".md")
+    ) {
+      mdFiles.push({
+        filename: node.path.split("/").pop(),
+        filepath: node.path,
+        rawUrl: `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${node.path}`,
+        sha: node.sha,
+      });
+    }
+  }
+  return mdFiles;
 }
 
+window.toc = async function (isObj = false) {
+  try {
+    // js对象数组
+    const blogJson = await getBlogFiles();
+    if (isObj) {
+      return blogJson;
+    }
+    const jsonString = JSON.stringify(blogJson, null, 2);
+    return jsonString;
+  } catch (e) {
+    console.error(e);
+  }
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+window.makeUrlList = async function () {
+  let result = [];
+  const response = await fetch("./toc.json");
+  const tocJson = await response.json();
+  for (const item of tocJson) {
+    result.push(`[${item.filename}](${item.filepath.slice(4)})`)
+  }
+  return result
+};
