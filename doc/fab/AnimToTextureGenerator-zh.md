@@ -1,16 +1,7 @@
 
-
-
-
-
 [lag]{简体中文}
 [English]{fab/AnimToTextureGenerator-en.md}
 [简体中文]{fab/AnimToTextureGenerator-zh.md}
-
-|||||
-|:---:|:---:|:---:|:---:|
-|[![Github](https://cdn.simpleicons.org/github/24292e =x30)](https://github.com/qq292)|[![Bilibili](https://cdn.simpleicons.org/bilibili/fb7299 =x30)](https://space.bilibili.com/3707016472169438)|[![Youtube](https://cdn.simpleicons.org/youtube/ff0000 =x30) ](https://www.youtube.com/@gaojiangchen)|[![Fab](https://img.shields.io/badge/Fab-007EFF?style=flat-square&logo=epicgames&logoColor=white =x30)](https://www.fab.com/sellers/gaojiang%20chen/about)|
-
 
 # AnimToTextureGenerator 插件文档
 ---
@@ -155,3 +146,9 @@
 版权所有 (c) qq292。保留所有权利。
 
 ---
+
+|||||
+|:---:|:---:|:---:|:---:|
+|[![Github](https://cdn.simpleicons.org/github/24292e =x30)](https://github.com/qq292)|[![Bilibili](https://cdn.simpleicons.org/bilibili/fb7299 =x30)](https://space.bilibili.com/3707016472169438)|[![Youtube](https://cdn.simpleicons.org/youtube/ff0000 =x30) ](https://www.youtube.com/@gaojiangchen)|[![Fab](https://img.shields.io/badge/Fab-007EFF?style=flat-square&logo=epicgames&logoColor=white =x30)](https://www.fab.com/sellers/gaojiang%20chen/about)|
+
+
