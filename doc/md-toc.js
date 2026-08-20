@@ -398,8 +398,10 @@ function setupSmoothScroll() {
         });
     });
 }
+
+
 let imgResizeObserver = null;
-function waitAllImgBoxExpand(contentEl, allBoxReadyCb) {
+function _waitAllImgBoxExpand(contentEl, allBoxReadyCb) {
     if (imgResizeObserver) {
         imgResizeObserver.disconnect();
         imgResizeObserver = null;
@@ -414,6 +416,10 @@ function waitAllImgBoxExpand(contentEl, allBoxReadyCb) {
     const total = imgs.length;
     let doneCount = 0;
     let finished = false;
+    /** @type {Set<HTMLImageElement>} */
+    const observingSet = new Set();
+    // 全部待处理图片，用于超时打印url
+    const pendingImgs = [...imgs];
 
     function checkAllDone() {
         if (finished) return;
@@ -423,7 +429,8 @@ function waitAllImgBoxExpand(contentEl, allBoxReadyCb) {
                 imgResizeObserver.disconnect();
                 imgResizeObserver = null;
             }
-            // 双重rAF，等待布局稳定
+            observingSet.clear();
+            pendingImgs.length = 0;
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     allBoxReadyCb();
@@ -435,7 +442,14 @@ function waitAllImgBoxExpand(contentEl, allBoxReadyCb) {
     function markImgDone(el) {
         if (finished) return;
         doneCount++;
-        imgResizeObserver.unobserve(el);
+        // 从待处理列表移除
+        const idx = pendingImgs.indexOf(el);
+        if(idx > -1) pendingImgs.splice(idx,1);
+
+        if (observingSet.has(el)) {
+            imgResizeObserver.unobserve(el);
+            observingSet.delete(el);
+        }
         checkAllDone();
     }
 
@@ -450,42 +464,40 @@ function waitAllImgBoxExpand(contentEl, allBoxReadyCb) {
     });
 
     imgs.forEach((img) => {
-        // 已经撑开，直接标记完成
         if (img.offsetHeight > 10) {
             markImgDone(img);
             return;
         }
 
-        // 图片加载失败兜底
-        img.addEventListener(
-            "error",
-            () => {
-                if (img.offsetHeight <= 10) {
-                    img.style.minHeight = "120px";
-                }
-                // 加载失败直接算作完成！关键修复
-                markImgDone(img);
-            },
-            { once: true },
-        );
+        img.addEventListener("error", () => {
+            if (img.offsetHeight <= 10) {
+                img.style.minHeight = "120px";
+            }
+            markImgDone(img);
+        }, { once: true });
 
-        // 图片正常加载完成，如果此时已经撑开
-        img.addEventListener(
-            "load",
-            () => {
+        img.addEventListener("load", () => {
+            requestAnimationFrame(() => {
                 if (img.offsetHeight > 10) {
                     markImgDone(img);
                 }
-            },
-            { once: true },
-        );
+            });
+        }, { once: true });
 
+        observingSet.add(img);
         imgResizeObserver.observe(img);
+    });
+
+    requestAnimationFrame(() => {
+        for (const img of observingSet) {
+            if (img.offsetHeight > 10) {
+                markImgDone(img);
+            }
+        }
     });
 
     checkAllDone();
 
-    // 增加超时兜底，防止某张图片永久卡死（file://本地文件非常需要）
     setTimeout(() => {
         if (!finished) {
             finished = true;
@@ -493,11 +505,52 @@ function waitAllImgBoxExpand(contentEl, allBoxReadyCb) {
                 imgResizeObserver.disconnect();
                 imgResizeObserver = null;
             }
-            console.warn("waitAllImgBoxExpand 超时兜底，部分图片未撑开");
+            observingSet.clear();
+
+            // 打印没有完成的图片url
+            const unfinishedUrls = pendingImgs.map(x=>x.src || x.getAttribute("src"));
+            console.warn("waitAllImgBoxExpand 超时兜底，部分图片未撑开", unfinishedUrls);
+
+            pendingImgs.length = 0;
             requestAnimationFrame(() => requestAnimationFrame(allBoxReadyCb));
         }
     }, 8000);
 }
+
+
+
+function waitAllImgBoxExpand(contentEl, allBoxReadyCb) {
+    const imgs = Array.from(contentEl.querySelectorAll("img"));
+    if (imgs.length === 0) {
+        allBoxReadyCb();
+        return;
+    }
+
+    let remain = imgs.length;
+
+    function doneOne() {
+        remain -= 1;
+        if (remain <= 0) {
+            // 图片资源全部就绪，双层rAF，留给浏览器重排布局
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    allBoxReadyCb();
+                });
+            });
+        }
+    }
+
+    imgs.forEach(img => {
+        // 图片已经加载完毕（缓存）
+        if (img.complete) {
+            doneOne();
+            return;
+        }
+        img.addEventListener("load", doneOne, { once: true });
+        img.addEventListener("error", doneOne, { once: true });
+    });
+}
+
 
 /**
  * 一键渲染：目录 + 正文 + 滚动高亮 + 平滑滚动
@@ -509,8 +562,8 @@ export function render(markdown) {
     clearTimeout(saveScrollTimer);
     processing = true;
     setLoading(true);
+
     //自定义渲染
-    const defaultFence = md.renderer.rules.fence;
     let i = 0;
     md.renderer.rules.fence = function (tokens, idx, options, env, self) {
         const token = tokens[idx];
@@ -565,6 +618,9 @@ export function render(markdown) {
     const contentEl = document.querySelector(options.contentContainer);
     if (contentEl) {
         contentEl.innerHTML = md.render(markdown);
+        if(tocItems.length>0){
+            document.title = tocItems[0]["title"]
+        }
     }
 
     // 渲染目录
