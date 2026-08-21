@@ -250,7 +250,6 @@
         let isRoot = false;
         let fetchUrl;
         if (targetUrl) {
-            // 本地环境下，如果目标不是本地地址，走 gmd 处理
             const hostname = new URL(targetUrl, window.location.href).hostname;
             if (hostname === "github.com") {
                 gmd(targetUrl);

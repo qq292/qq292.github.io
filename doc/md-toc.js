@@ -758,8 +758,7 @@ export function render(markdown, urlf, imgf) {
                     ) {
                         // 完整 URL，不动
                     } else if (href.startsWith("/")) {
-                        // token.attrs[hrefIndex][1] = urlf["rootRelative"] + href;
-                        console.log("url根路径, 未处理");
+                        token.attrs[hrefIndex][1] = urlf["rootRelative"] + href;
                     } else {
                         console.log(href);
                         token.attrs[hrefIndex][1] =
@@ -1027,6 +1026,16 @@ function base64ToUtf8(b64) {
     const buf = new Uint8Array([...bytes].map((c) => c.charCodeAt(0)));
     return new TextDecoder("utf-8").decode(buf);
 }
+function splitDirAndFile(filePath) {
+    const lastSlashIndex = filePath.lastIndexOf("/");
+    if (lastSlashIndex === -1) {
+        // 文件在仓库根目录，没有目录
+        return { dir: "", filename: filePath };
+    }
+    const dir = filePath.slice(0, lastSlashIndex);
+    const filename = filePath.slice(lastSlashIndex + 1);
+    return { dir, filename };
+}
 // 渲染github md文件
 window.gmd = async function fetchGithubMd(githubUrl) {
     savePrefixion = simpleHash(githubUrl);
@@ -1042,11 +1051,11 @@ window.gmd = async function fetchGithubMd(githubUrl) {
     // notebooks/figures/PDSH-cover.png
     // https://github.com/jakevdp/PythonDataScienceHandbook/raw/master/notebooks/figures/PDSH-cover.png
     imgf["relative"] = `https://github.com/${owner}/${repo}/raw/${ref}/`;
-    // https://github.com/Tencent/cherry-markdown/blob/dev/README.md
-    // ./README.CN.md
-    // https://github.com/Tencent/cherry-markdown/blob/dev/README.CN.md
 
-    urlf["relative"] = `https://github.com/${owner}/${repo}/blob/${ref}/`;
+    urlf["relative"] =
+        `https://github.com/${owner}/${repo}/blob/${ref}/${splitDirAndFile(filePath).dir}/`;
+
+    urlf["rootRelative"] = `https://github.com/${owner}/${repo}/blob/${ref}/`;
 
     const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${ref}`;
 

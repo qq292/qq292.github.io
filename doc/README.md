@@ -10,6 +10,10 @@
 |
 [/绝对路径](/data/re.md)
 
+<a href="./fab/AnimToTextureGenerator-zh.md">./相对路径a</a>
+|
+<a href="/data/re.md">/绝对路径a</a>
+
 ---
 
 |                                                                                       |                                                                                                              |                                                                                                       |                                                                                                                                                            |
