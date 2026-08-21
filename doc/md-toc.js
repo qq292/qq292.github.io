@@ -716,10 +716,8 @@ export function render(markdown, urlf, imgf) {
                     ) {
                         return match;
                     } else if (src.startsWith("/")) {
-                        // console.log("根相对路径");
                         return `src="${imgf["rootRelative"]}${src}"`;
                     } else {
-                        // console.log("相对路径");
                         return `src="${imgf["relative"]}${src}"`;
                     }
                 },
@@ -729,7 +727,7 @@ export function render(markdown, urlf, imgf) {
                 : self.renderToken(tokens, idx, options);
         };
     }
-
+    // 处理a标签
     if (urlf) {
         const defaultLinkRender =
             md.renderer.rules.link_open ||
@@ -758,6 +756,7 @@ export function render(markdown, urlf, imgf) {
                     ) {
                         // 完整 URL，不动
                     } else if (href.startsWith("/")) {
+                        console.log(href);
                         token.attrs[hrefIndex][1] = urlf["rootRelative"] + href;
                     } else {
                         console.log(href);
@@ -768,7 +767,22 @@ export function render(markdown, urlf, imgf) {
             return defaultLinkRender(tokens, idx, options, env, self);
         };
 
-        // 处理 HTML <a> 标签的 href
+        // 处理块级 HTML（独占一行的标签）
+        function processHref(match, href) {
+            if (
+                href.startsWith("http://") ||
+                href.startsWith("https://") ||
+                href.startsWith("#") ||
+                href.startsWith("mailto:") ||
+                href.startsWith("tel:")
+            ) {
+                return match;
+            } else if (href.startsWith("/")) {
+                return `href="${urlf["rootRelative"]}${href}"`;
+            } else {
+                return `href="${urlf["relative"]}${href.replace(/^\.\//, "")}"`;
+            }
+        }
         const defaultHtmlBlock = md.renderer.rules.html_block;
         md.renderer.rules.html_block = function (
             tokens,
@@ -778,23 +792,25 @@ export function render(markdown, urlf, imgf) {
             self,
         ) {
             const token = tokens[idx];
-            token.content = token.content.replace(
-                /href="(.*?)"/g,
-                (match, href) => {
-                    if (
-                        href.startsWith("http://") ||
-                        href.startsWith("https://")
-                    ) {
-                        return match;
-                    } else if (href.startsWith("/")) {
-                        return `href="${urlf["rootRelative"]}${href}"`;
-                    } else {
-                        return `href="${urlf["relative"]}${href.replace(/^\.\//, "")}"`;
-                    }
-                },
-            );
+            token.content = token.content.replace(/href="(.*?)"/g, processHref);
             return defaultHtmlBlock
                 ? defaultHtmlBlock(tokens, idx, options, env, self)
+                : self.renderToken(tokens, idx, options);
+        };
+
+        // 处理行内 HTML（嵌在文本中的标签）
+        const defaultHtmlInline = md.renderer.rules.html_inline;
+        md.renderer.rules.html_inline = function (
+            tokens,
+            idx,
+            options,
+            env,
+            self,
+        ) {
+            const token = tokens[idx];
+            token.content = token.content.replace(/href="(.*?)"/g, processHref);
+            return defaultHtmlInline
+                ? defaultHtmlInline(tokens, idx, options, env, self)
                 : self.renderToken(tokens, idx, options);
         };
     }
@@ -1052,10 +1068,9 @@ window.gmd = async function fetchGithubMd(githubUrl) {
     // https://github.com/jakevdp/PythonDataScienceHandbook/raw/master/notebooks/figures/PDSH-cover.png
     imgf["relative"] = `https://github.com/${owner}/${repo}/raw/${ref}/`;
 
-    urlf["relative"] =
-        `https://github.com/${owner}/${repo}/blob/${ref}/${splitDirAndFile(filePath).dir}/`;
-
     urlf["rootRelative"] = `https://github.com/${owner}/${repo}/blob/${ref}/`;
+    urlf["relative"] =
+        `${urlf["rootRelative"]}${splitDirAndFile(filePath).dir}/`;
 
     const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${ref}`;
 

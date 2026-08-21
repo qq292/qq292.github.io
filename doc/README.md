@@ -14,6 +14,11 @@
 |
 <a href="/data/re.md">/绝对路径a</a>
 
+![./相对路径](./fab/image.png)
+![/根相对路径](/source/images/QQ_1787350522635.png)
+
+![alt text]()
+
 ---
 
 |                                                                                       |                                                                                                              |                                                                                                       |                                                                                                                                                            |
