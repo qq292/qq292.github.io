@@ -36,15 +36,63 @@
         "sha": "307fbcefeb3f1eca7faead4fc3a0e7d7cc684895"
     },
     {
+        "filename": "AnimToTextureGenerator-de.md",
+        "filepath": "doc/fab/AnimToTextureGenerator-de.md",
+        "rawUrl": "https://raw.githubusercontent.com/qq292/qq292.github.io/master/doc/fab/AnimToTextureGenerator-de.md",
+        "sha": "9cdaa16b5e873617632cb6c452c7ec893f8d48f3"
+    },
+    {
         "filename": "AnimToTextureGenerator-en.md",
         "filepath": "doc/fab/AnimToTextureGenerator-en.md",
         "rawUrl": "https://raw.githubusercontent.com/qq292/qq292.github.io/master/doc/fab/AnimToTextureGenerator-en.md",
-        "sha": "ad80b94982144b7270989c1a5056c4ec825008dc"
+        "sha": "40f0c3177738b6be4d342275a4153c2adbe66eaa"
+    },
+    {
+        "filename": "AnimToTextureGenerator-es.md",
+        "filepath": "doc/fab/AnimToTextureGenerator-es.md",
+        "rawUrl": "https://raw.githubusercontent.com/qq292/qq292.github.io/master/doc/fab/AnimToTextureGenerator-es.md",
+        "sha": "1bb1aff2cc54d8407f594961f1a1435fdd400392"
+    },
+    {
+        "filename": "AnimToTextureGenerator-fr.md",
+        "filepath": "doc/fab/AnimToTextureGenerator-fr.md",
+        "rawUrl": "https://raw.githubusercontent.com/qq292/qq292.github.io/master/doc/fab/AnimToTextureGenerator-fr.md",
+        "sha": "b7e3277aa4787fb957d904adcb2f39529d30285d"
+    },
+    {
+        "filename": "AnimToTextureGenerator-ja.md",
+        "filepath": "doc/fab/AnimToTextureGenerator-ja.md",
+        "rawUrl": "https://raw.githubusercontent.com/qq292/qq292.github.io/master/doc/fab/AnimToTextureGenerator-ja.md",
+        "sha": "bfd32abc41f9328c0d3f81772c6c337a4756e9ec"
+    },
+    {
+        "filename": "AnimToTextureGenerator-ko.md",
+        "filepath": "doc/fab/AnimToTextureGenerator-ko.md",
+        "rawUrl": "https://raw.githubusercontent.com/qq292/qq292.github.io/master/doc/fab/AnimToTextureGenerator-ko.md",
+        "sha": "12faca879efffa084611c5d10581e493e06b570a"
+    },
+    {
+        "filename": "AnimToTextureGenerator-pt-BR.md",
+        "filepath": "doc/fab/AnimToTextureGenerator-pt-BR.md",
+        "rawUrl": "https://raw.githubusercontent.com/qq292/qq292.github.io/master/doc/fab/AnimToTextureGenerator-pt-BR.md",
+        "sha": "0da54f82b26dba1be9e7d001a7fdea11b20bcb49"
+    },
+    {
+        "filename": "AnimToTextureGenerator-ru.md",
+        "filepath": "doc/fab/AnimToTextureGenerator-ru.md",
+        "rawUrl": "https://raw.githubusercontent.com/qq292/qq292.github.io/master/doc/fab/AnimToTextureGenerator-ru.md",
+        "sha": "363c01cb715550e488fd0fe0b04ad2cbef02042e"
+    },
+    {
+        "filename": "AnimToTextureGenerator-zh-Hant.md",
+        "filepath": "doc/fab/AnimToTextureGenerator-zh-Hant.md",
+        "rawUrl": "https://raw.githubusercontent.com/qq292/qq292.github.io/master/doc/fab/AnimToTextureGenerator-zh-Hant.md",
+        "sha": "94aa7de938609475b6bb848e683d03581034cf11"
     },
     {
         "filename": "AnimToTextureGenerator-zh.md",
         "filepath": "doc/fab/AnimToTextureGenerator-zh.md",
         "rawUrl": "https://raw.githubusercontent.com/qq292/qq292.github.io/master/doc/fab/AnimToTextureGenerator-zh.md",
-        "sha": "0dfb6660cc31ee7d14fd36852c9acd65ef3eed78"
+        "sha": "7e934bcf5c71aa0847a5e5a596591e14a6373f9c"
     }
 ]
