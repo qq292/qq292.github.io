@@ -70,7 +70,7 @@ function onTagData() {
             continue;
         }
         const option = document.createElement("div");
-        option.dataset["value"] = url;
+        option.dataset["value"] = url[0];
         option.innerText = lag;
         if (currentLag === lag) {
             selected.innerHTML = currentLag;
@@ -662,12 +662,132 @@ function waitAllImgBoxExpand(contentEl, allBoxReadyCb) {
  * 一键渲染：目录 + 正文 + 滚动高亮 + 平滑滚动
  */
 let processing = false;
-export function render(markdown) {
+export function render(markdown, urlf, imgf) {
     if (!md) throw new Error("请先调用 setMarkdownInstance() 初始化");
     SCROLL_POSITION_KEY = getSaveKey("sp");
     clearTimeout(saveScrollTimer);
     processing = true;
     setLoading(true);
+
+    if (imgf) {
+        // 保存原始渲染器
+        const defaultRender = md.renderer.rules.image;
+        md.renderer.rules.image = function (tokens, idx, options, env, self) {
+            const token = tokens[idx];
+            const srcIndex = token.attrIndex("src");
+            console.log(token);
+            if (srcIndex >= 0) {
+                const src = token.attrs[srcIndex][1];
+
+                if (src.startsWith("http://") || src.startsWith("https://")) {
+                    // 完整 URL，不动
+                } else if (src.startsWith("/")) {
+                    // 根相对路径：/notebooks/figures/PDSH-cover.png
+                    console.log("根相对路径");
+                    token.attrs[srcIndex][1] = imgf["rootRelative"] + src;
+                } else {
+                    console.log("相对路径");
+                    // 相对路径：notebooks/figures/PDSH-cover.png
+                    token.attrs[srcIndex][1] = imgf["relative"] + src;
+                }
+            }
+
+            // 调用原始渲染器生成 HTML
+            return defaultRender
+                ? defaultRender(tokens, idx, options, env, self)
+                : self.renderToken(tokens, idx, options);
+        };
+        // 处理 HTML <img> 标签
+        const defaultHtmlBlock = md.renderer.rules.html_block;
+        md.renderer.rules.html_block = function (
+            tokens,
+            idx,
+            options,
+            env,
+            self,
+        ) {
+            const token = tokens[idx];
+            // 用正则匹配 src="..." 并替换路径
+            token.content = token.content.replace(
+                /src="(.*?)"/g,
+                (match, src) => {
+                    if (
+                        src.startsWith("http://") ||
+                        src.startsWith("https://")
+                    ) {
+                        return match;
+                    } else if (src.startsWith("/")) {
+                        console.log("根相对路径");
+                        return `src="${imgf["rootRelative"]}${src}"`;
+                    } else {
+                        console.log("相对路径");
+                        return `src="${imgf["relative"]}${src}"`;
+                    }
+                },
+            );
+            return defaultHtmlBlock
+                ? defaultHtmlBlock(tokens, idx, options, env, self)
+                : self.renderToken(tokens, idx, options);
+        };
+    }
+
+    if (urlf) {
+        // 处理 Markdown 链接语法：[text](href)
+        const defaultLinkRender = md.renderer.rules.link2;
+        console.log("link2");
+        md.renderer.rules.link2 = function (tokens, idx, options, env, self) {
+            const token = tokens[idx];
+            console.log("link2: ", token);
+            const hrefIndex = token.attrIndex("href");
+            if (hrefIndex >= 0) {
+                const href = token.attrs[hrefIndex][1];
+                if (href.startsWith("http://") || href.startsWith("https://")) {
+                    // 完整 URL，不动
+                } else if (href.startsWith("/")) {
+                    console.log("根相对url");
+                    token.attrs[hrefIndex][1] = urlf["rootRelative"] + href;
+                } else {
+                    console.log("相对url");
+                    // 去掉开头的 ./，使 README.CN.md 和 ./README.CN.md 统一处理
+                    token.attrs[hrefIndex][1] =
+                        urlf["relative"] + href.replace(/^\.\//, "");
+                }
+            }
+            return defaultLinkRender
+                ? defaultLinkRender(tokens, idx, options, env, self)
+                : self.renderToken(tokens, idx, options);
+        };
+
+        // 处理 HTML <a> 标签
+        const defaultHtmlBlock = md.renderer.rules.html_block;
+        md.renderer.rules.html_block = function (
+            tokens,
+            idx,
+            options,
+            env,
+            self,
+        ) {
+            const token = tokens[idx];
+            token.content = token.content.replace(
+                /href="(.*?)"/g,
+                (match, href) => {
+                    if (
+                        href.startsWith("http://") ||
+                        href.startsWith("https://")
+                    ) {
+                        return match;
+                    } else if (href.startsWith("/")) {
+                        return `href="${urlf["rootRelative"]}${href}"`;
+                    } else {
+                        return `href="${urlf["relative"]}${href.replace(/^\.\//, "")}"`;
+                    }
+                },
+            );
+            return defaultHtmlBlock
+                ? defaultHtmlBlock(tokens, idx, options, env, self)
+                : self.renderToken(tokens, idx, options);
+        };
+    }
 
     //自定义渲染
     let i = 0;
@@ -891,16 +1011,16 @@ window.rmd = async function openLocalMdFile() {
     const mdText = await file.text();
     render(mdText);
 };
-
+function base64ToUtf8(b64) {
+    const bytes = atob(b64);
+    const buf = new Uint8Array([...bytes].map((c) => c.charCodeAt(0)));
+    return new TextDecoder("utf-8").decode(buf);
+}
 // 渲染github md文件
 window.gmd = async function fetchGithubMd(githubUrl) {
     savePrefixion = simpleHash(githubUrl);
-    function base64ToUtf8(b64) {
-        const bytes = atob(b64);
-        const buf = new Uint8Array([...bytes].map((c) => c.charCodeAt(0)));
-        return new TextDecoder("utf-8").decode(buf);
-    }
-
+    const imgf = {};
+    const urlf = {};
     const reg =
         /^https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/blob\/([^\/]+)\/(.+)$/;
     const match = githubUrl.match(reg);
@@ -908,7 +1028,14 @@ window.gmd = async function fetchGithubMd(githubUrl) {
         throw new Error("链接格式不对,请传入github blob网页链接");
     }
     const [, owner, repo, ref, filePath] = match;
+    // notebooks/figures/PDSH-cover.png
+    // https://github.com/jakevdp/PythonDataScienceHandbook/raw/master/notebooks/figures/PDSH-cover.png
+    imgf["relative"] = `https://github.com/${owner}/${repo}/raw/${ref}/`;
+    // https://github.com/Tencent/cherry-markdown/blob/dev/README.md
+    // ./README.CN.md
+    // https://github.com/Tencent/cherry-markdown/blob/dev/README.CN.md
 
+    urlf["relative"] = `https://api.github.com/repos/${owner}/${repo}`;
     const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${ref}`;
     const res = await fetch(apiUrl);
     if (!res.ok) {
@@ -922,7 +1049,33 @@ window.gmd = async function fetchGithubMd(githubUrl) {
 
     const b64Str = json.content.replace(/\n/g, "");
     const mdText = base64ToUtf8(b64Str);
+    render(mdText, urlf, imgf);
+};
+// 渲染 码云md文件
+window.mmd = async function fetchGiteeMd(blobUrl) {
+    savePrefixion = simpleHash(blobUrl);
+    const urlObj = new URL(blobUrl);
 
+    const parts = urlObj.pathname.split("/").filter(Boolean);
+    const [owner, repo, mode, ref, ...filePathSegments] = parts;
+
+    if (mode !== "blob") {
+        throw new Error("只支持 /blob/ 格式的gitee链接");
+    }
+    const filePath = filePathSegments.join("/");
+
+    // 构造gitee v5 contents api
+    const apiUrl = `https://gitee.com/api/v5/repos/${owner}/${repo}/contents/${encodeURIComponent(filePath)}?ref=${ref}`;
+
+    const resp = await fetch(apiUrl);
+    if (!resp.ok) {
+        throw new Error(`Gitee API 请求失败 status:${resp.status}`);
+    }
+    const json = await resp.json();
+    if (json.encoding !== "base64") {
+        throw new Error("文件编码不是base64");
+    }
+    const mdText = base64ToUtf8(json.content);
     render(mdText);
 };
 

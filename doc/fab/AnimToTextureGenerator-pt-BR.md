@@ -1,4 +1,4 @@
-[lang]{Português (BR)}
+[lag]{Português (BR)}
 [简体中文]{fab/AnimToTextureGenerator-zh.md}
 [English]{fab/AnimToTextureGenerator-en.md}
 [한국어]{fab/AnimToTextureGenerator-ko.md}
