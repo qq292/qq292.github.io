@@ -1,0 +1,29 @@
+{
+    "editor.guides.indentation": false,
+    // 保存文件自动格式化
+    "editor.formatOnSave": true,
+    // 全局默认格式化器使用 prettier
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+    // 编辑器tab显示为4个空格
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+
+    // Prettier 格式化：4空格，不用\t制表符
+    "prettier.tabWidth": 4,
+    "prettier.useTabs": false,
+
+    // 绑定js/html/css/json全部使用prettier格式化
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+}

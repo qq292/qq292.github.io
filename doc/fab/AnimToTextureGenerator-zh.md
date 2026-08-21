@@ -1,9 +1,17 @@
-
 [lag]{简体中文}
-[English]{fab/AnimToTextureGenerator-en.md}
 [简体中文]{fab/AnimToTextureGenerator-zh.md}
+[English]{fab/AnimToTextureGenerator-en.md}
+[한국어]{fab/AnimToTextureGenerator-ko.md}
+[Русский]{fab/AnimToTextureGenerator-ru.md}
+[日本語]{fab/AnimToTextureGenerator-ja.md}
+[Español]{fab/AnimToTextureGenerator-es.md}
+[Português (BR)]{fab/AnimToTextureGenerator-pt-BR.md}
+[Français]{fab/AnimToTextureGenerator-fr.md}
+[Deutsch]{fab/AnimToTextureGenerator-de.md}
+[繁體中文]{fab/AnimToTextureGenerator-zh-Hant.md}
 
 # AnimToTextureGenerator 插件文档
+
 ---
 
 ### 概述
@@ -80,59 +88,57 @@
 </iframe>
 </div>
 
-
-
 ### 生成的资源
 
 转换完成后，将在所选保存路径中创建以下资源：
 
-| 资源类型 | 说明 |
-|---------|------|
-| **静态网格体（Static Mesh）** | 从骨骼网格体派生的静态网格体，用于 VAT 渲染。 |
-| **根材质（Material）** | 包含 VAT 着色器节点用于动画纹理采样的根材质。 |
-| **材质实例（Material Instance）** | 每个材质槽的材质实例，链接到根材质。 |
-| **数据资产（Data Asset）** | `UAnimToTextureDataAsset` — 包含所有生成资源的引用、动画序列、骨骼纹理和采样率信息。 |
-| **骨骼旋转纹理（Bone Rotation Texture）** | 存储骨骼旋转动画数据的纹理。 |
-| **骨骼位置纹理（Bone Position Texture）** | 存储骨骼位置动画数据的纹理。 |
-| **骨骼权重纹理（Bone Weight Texture）** | 存储骨骼权重动画数据的纹理。 |
+| 资源类型                                  | 说明                                                                                 |
+| ----------------------------------------- | ------------------------------------------------------------------------------------ |
+| **静态网格体（Static Mesh）**             | 从骨骼网格体派生的静态网格体，用于 VAT 渲染。                                        |
+| **根材质（Material）**                    | 包含 VAT 着色器节点用于动画纹理采样的根材质。                                        |
+| **材质实例（Material Instance）**         | 每个材质槽的材质实例，链接到根材质。                                                 |
+| **数据资产（Data Asset）**                | `UAnimToTextureDataAsset` — 包含所有生成资源的引用、动画序列、骨骼纹理和采样率信息。 |
+| **骨骼旋转纹理（Bone Rotation Texture）** | 存储骨骼旋转动画数据的纹理。                                                         |
+| **骨骼位置纹理（Bone Position Texture）** | 存储骨骼位置动画数据的纹理。                                                         |
+| **骨骼权重纹理（Bone Weight Texture）**   | 存储骨骼权重动画数据的纹理。                                                         |
 
 ### 蓝图 API
 
 插件通过 `AnimToTextureGeneratorLibrary` 提供以下蓝图可调用函数：
 
-| 函数 | 说明 |
-|------|------|
-| `OpenFilteredAnimSequencePicker` | 打开过滤动画序列选择器对话框。参数：`FilterSkeletalMesh`（用于过滤的骨骼网格体）、`OnAssetsPicked`（回调委托）。 |
-| `ShowSimpleSuccessToast` | 显示简单的成功通知提示。参数：`Message`（显示文本）、`Duration`（显示持续时间，秒）。 |
-| `InvokeConvertSkeletalMeshToStaticMesh` | 将骨骼网格体转换为静态网格体。参数：`SkeletalMesh`、`NamePrefix`、`LODIndex`。返回值：`UStaticMesh*`。 |
-| `InvokeAnimationToTexture` | 启动主要的动画到纹理转换。参数：`DataAsset`。返回值：`bool`。 |
-| `InvokeSetLightMapIndex` | 设置静态网格体的光照贴图 UV 索引。参数：`StaticMesh`、`LODIndex`、`LightmapIndex`、`bGenerateLightmapUVs`。返回值：`bool`。 |
-| `InvokeUpdateMaterialInstanceFromDataAsset` | 根据数据资产更新材质实例。参数：`DataAsset`、`MaterialInstance`、`MaterialParameterAssociation`。 |
-| `FindActiveSkeletalMesh` | 查找编辑器中当前活动的骨骼网格体。返回值：`USkeletalMesh*`。 |
+| 函数                                        | 说明                                                                                                                        |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `OpenFilteredAnimSequencePicker`            | 打开过滤动画序列选择器对话框。参数：`FilterSkeletalMesh`（用于过滤的骨骼网格体）、`OnAssetsPicked`（回调委托）。            |
+| `ShowSimpleSuccessToast`                    | 显示简单的成功通知提示。参数：`Message`（显示文本）、`Duration`（显示持续时间，秒）。                                       |
+| `InvokeConvertSkeletalMeshToStaticMesh`     | 将骨骼网格体转换为静态网格体。参数：`SkeletalMesh`、`NamePrefix`、`LODIndex`。返回值：`UStaticMesh*`。                      |
+| `InvokeAnimationToTexture`                  | 启动主要的动画到纹理转换。参数：`DataAsset`。返回值：`bool`。                                                               |
+| `InvokeSetLightMapIndex`                    | 设置静态网格体的光照贴图 UV 索引。参数：`StaticMesh`、`LODIndex`、`LightmapIndex`、`bGenerateLightmapUVs`。返回值：`bool`。 |
+| `InvokeUpdateMaterialInstanceFromDataAsset` | 根据数据资产更新材质实例。参数：`DataAsset`、`MaterialInstance`、`MaterialParameterAssociation`。                           |
+| `FindActiveSkeletalMesh`                    | 查找编辑器中当前活动的骨骼网格体。返回值：`USkeletalMesh*`。                                                                |
 
 ### 数据资产：UAnimToTextureDataAsset
 
 `UAnimToTextureDataAsset` 是保存生成 VAT 所有信息的中心数据结构：
 
-| 属性 | 类型 | 说明 |
-|------|------|------|
-| `AnimSequences` | `TArray<UAnimSequence*>` | 包含在 VAT 中的动画序列数组。 |
-| `SkeletalMesh` | `USkeletalMesh*` | 源骨骼网格体的引用。 |
-| `StaticMesh` | `UStaticMesh*` | 生成的静态网格体的引用。 |
-| `BoneRotationTexture` | `UTexture2D*` | 骨骼旋转动画纹理。 |
-| `BonePositionTexture` | `UTexture2D*` | 骨骼位置动画纹理。 |
-| `BoneWeightTexture` | `UTexture2D*` | 骨骼权重动画纹理。 |
-| `SampleRate` | `float` | 帧采样率（小数形式的每秒帧数）。 |
-| `UVChannel` | `int` | 静态网格体使用的 UV 通道索引。 |
+| 属性                  | 类型                     | 说明                             |
+| --------------------- | ------------------------ | -------------------------------- |
+| `AnimSequences`       | `TArray<UAnimSequence*>` | 包含在 VAT 中的动画序列数组。    |
+| `SkeletalMesh`        | `USkeletalMesh*`         | 源骨骼网格体的引用。             |
+| `StaticMesh`          | `UStaticMesh*`           | 生成的静态网格体的引用。         |
+| `BoneRotationTexture` | `UTexture2D*`            | 骨骼旋转动画纹理。               |
+| `BonePositionTexture` | `UTexture2D*`            | 骨骼位置动画纹理。               |
+| `BoneWeightTexture`   | `UTexture2D*`            | 骨骼权重动画纹理。               |
+| `SampleRate`          | `float`                  | 帧采样率（小数形式的每秒帧数）。 |
+| `UVChannel`           | `int`                    | 静态网格体使用的 UV 通道索引。   |
 
 ### 模块结构
 
-| 文件 | 说明 |
-|------|------|
-| `AnimToTextureGenerator.cpp` | 主模块入口点。处理启动/关闭、注册工具栏按钮、内容浏览器右键菜单，以及扩展骨骼网格体编辑器工具栏。 |
-| `AnimToTextureGeneratorLibrary.cpp` | 蓝图可访问的库函数。提供用于打开动画选择器、调用转换、管理材质和显示通知的实用函数。 |
-| `Processor.cpp` | 核心处理逻辑。编排完整的 VAT 生成流程：静态网格体创建、骨骼纹理提取、材质克隆、材质实例创建和 VAT 生成。 |
-| `AnimSequencePicker.cpp` | 动画序列选择器对话框的 Slate UI 控件。提供带 LOD 层级支持的过滤资源选择。 |
+| 文件                                | 说明                                                                                                     |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `AnimToTextureGenerator.cpp`        | 主模块入口点。处理启动/关闭、注册工具栏按钮、内容浏览器右键菜单，以及扩展骨骼网格体编辑器工具栏。        |
+| `AnimToTextureGeneratorLibrary.cpp` | 蓝图可访问的库函数。提供用于打开动画选择器、调用转换、管理材质和显示通知的实用函数。                     |
+| `Processor.cpp`                     | 核心处理逻辑。编排完整的 VAT 生成流程：静态网格体创建、骨骼纹理提取、材质克隆、材质实例创建和 VAT 生成。 |
+| `AnimSequencePicker.cpp`            | 动画序列选择器对话框的 Slate UI 控件。提供带 LOD 层级支持的过滤资源选择。                                |
 
 ### 版本兼容性
 
@@ -147,8 +153,6 @@
 
 ---
 
-|||||
-|:---:|:---:|:---:|:---:|
-|[![Github](https://cdn.simpleicons.org/github/24292e =x30)](https://github.com/qq292)|[![Bilibili](https://cdn.simpleicons.org/bilibili/fb7299 =x30)](https://space.bilibili.com/3707016472169438)|[![Youtube](https://cdn.simpleicons.org/youtube/ff0000 =x30) ](https://www.youtube.com/@gaojiangchen)|[![Fab](https://img.shields.io/badge/Fab-007EFF?style=flat-square&logo=epicgames&logoColor=white =x30)](https://www.fab.com/sellers/gaojiang%20chen/about)|
-
-
+|                                                                                       |                                                                                                              |                                                                                                       |                                                                                                                                                            |
+| :-----------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [![Github](https://cdn.simpleicons.org/github/24292e =x30)](https://github.com/qq292) | [![Bilibili](https://cdn.simpleicons.org/bilibili/fb7299 =x30)](https://space.bilibili.com/3707016472169438) | [![Youtube](https://cdn.simpleicons.org/youtube/ff0000 =x30) ](https://www.youtube.com/@gaojiangchen) | [![Fab](https://img.shields.io/badge/Fab-007EFF?style=flat-square&logo=epicgames&logoColor=white =x30)](https://www.fab.com/sellers/gaojiang%20chen/about) |

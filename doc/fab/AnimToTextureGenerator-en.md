@@ -1,7 +1,14 @@
-
 [lag]{English}
-[English]{fab/AnimToTextureGenerator-en.md}
 [简体中文]{fab/AnimToTextureGenerator-zh.md}
+[English]{fab/AnimToTextureGenerator-en.md}
+[한국어]{fab/AnimToTextureGenerator-ko.md}
+[Русский]{fab/AnimToTextureGenerator-ru.md}
+[日本語]{fab/AnimToTextureGenerator-ja.md}
+[Español]{fab/AnimToTextureGenerator-es.md}
+[Português (BR)]{fab/AnimToTextureGenerator-pt-BR.md}
+[Français]{fab/AnimToTextureGenerator-fr.md}
+[Deutsch]{fab/AnimToTextureGenerator-de.md}
+[繁體中文]{fab/AnimToTextureGenerator-zh-Hant.md}
 
 # AnimToTextureGenerator Plugin Documentation
 
@@ -81,60 +88,57 @@ This plugin supports **Unreal Engine 5.4 through 5.8** and is compatible with bo
 </iframe>
 </div>
 
-
-
-
 ### Generated Assets
 
 After the conversion completes, the following assets will be created in the selected save path:
 
-| Asset Type | Description |
-|-----------|-------------|
-| **Static Mesh** | A static mesh derived from the skeletal mesh, used for VAT rendering. |
-| **Material (Root)** | Root material with VAT shader nodes for animation texture sampling. |
-| **Material Instance** | Material instances for each material slot, linked to the root material. |
-| **Data Asset** | `UAnimToTextureDataAsset` — contains references to all generated assets, animation sequences, bone textures, and sample rate information. |
-| **Bone Rotation Texture** | Texture storing bone rotation data for animation. |
-| **Bone Position Texture** | Texture storing bone position data for animation. |
-| **Bone Weight Texture** | Texture storing bone weight data for animation. |
+| Asset Type                | Description                                                                                                                               |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **Static Mesh**           | A static mesh derived from the skeletal mesh, used for VAT rendering.                                                                     |
+| **Material (Root)**       | Root material with VAT shader nodes for animation texture sampling.                                                                       |
+| **Material Instance**     | Material instances for each material slot, linked to the root material.                                                                   |
+| **Data Asset**            | `UAnimToTextureDataAsset` — contains references to all generated assets, animation sequences, bone textures, and sample rate information. |
+| **Bone Rotation Texture** | Texture storing bone rotation data for animation.                                                                                         |
+| **Bone Position Texture** | Texture storing bone position data for animation.                                                                                         |
+| **Bone Weight Texture**   | Texture storing bone weight data for animation.                                                                                           |
 
 ### Blueprint API
 
 The plugin exposes the following Blueprint-callable functions via `AnimToTextureGeneratorLibrary`:
 
-| Function | Description |
-|---------|-------------|
-| `OpenFilteredAnimSequencePicker` | Opens a filtered animation sequence picker dialog. Parameters: `FilterSkeletalMesh` (Skeletal Mesh to filter by), `OnAssetsPicked` (Callback delegate). |
-| `ShowSimpleSuccessToast` | Displays a simple success notification toast. Parameters: `Message` (Text to display), `Duration` (Display duration in seconds). |
-| `InvokeConvertSkeletalMeshToStaticMesh` | Converts a skeletal mesh to a static mesh. Parameters: `SkeletalMesh`, `NamePrefix`, `LODIndex`. Returns: `UStaticMesh*`. |
-| `InvokeAnimationToTexture` | Initiates the main animation-to-texture conversion. Parameters: `DataAsset`. Returns: `bool`. |
-| `InvokeSetLightMapIndex` | Sets the lightmap UV index for a static mesh. Parameters: `StaticMesh`, `LODIndex`, `LightmapIndex`, `bGenerateLightmapUVs`. Returns: `bool`. |
-| `InvokeUpdateMaterialInstanceFromDataAsset` | Updates a material instance from a data asset. Parameters: `DataAsset`, `MaterialInstance`, `MaterialParameterAssociation`. |
-| `FindActiveSkeletalMesh` | Finds the currently active skeletal mesh in the editor. Returns: `USkeletalMesh*`. |
+| Function                                    | Description                                                                                                                                             |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `OpenFilteredAnimSequencePicker`            | Opens a filtered animation sequence picker dialog. Parameters: `FilterSkeletalMesh` (Skeletal Mesh to filter by), `OnAssetsPicked` (Callback delegate). |
+| `ShowSimpleSuccessToast`                    | Displays a simple success notification toast. Parameters: `Message` (Text to display), `Duration` (Display duration in seconds).                        |
+| `InvokeConvertSkeletalMeshToStaticMesh`     | Converts a skeletal mesh to a static mesh. Parameters: `SkeletalMesh`, `NamePrefix`, `LODIndex`. Returns: `UStaticMesh*`.                               |
+| `InvokeAnimationToTexture`                  | Initiates the main animation-to-texture conversion. Parameters: `DataAsset`. Returns: `bool`.                                                           |
+| `InvokeSetLightMapIndex`                    | Sets the lightmap UV index for a static mesh. Parameters: `StaticMesh`, `LODIndex`, `LightmapIndex`, `bGenerateLightmapUVs`. Returns: `bool`.           |
+| `InvokeUpdateMaterialInstanceFromDataAsset` | Updates a material instance from a data asset. Parameters: `DataAsset`, `MaterialInstance`, `MaterialParameterAssociation`.                             |
+| `FindActiveSkeletalMesh`                    | Finds the currently active skeletal mesh in the editor. Returns: `USkeletalMesh*`.                                                                      |
 
 ### Data Asset: UAnimToTextureDataAsset
 
 The `UAnimToTextureDataAsset` is the central data structure that holds all information about the generated VAT:
 
-| Property | Type | Description |
-|---------|------|-------------|
-| `AnimSequences` | `TArray<UAnimSequence*>` | Array of animation sequences included in the VAT. |
-| `SkeletalMesh` | `USkeletalMesh*` | Reference to the source skeletal mesh. |
-| `StaticMesh` | `UStaticMesh*` | Reference to the generated static mesh. |
-| `BoneRotationTexture` | `UTexture2D*` | Bone rotation animation texture. |
-| `BonePositionTexture` | `UTexture2D*` | Bone position animation texture. |
-| `BoneWeightTexture` | `UTexture2D*` | Bone weight animation texture. |
-| `SampleRate` | `float` | Frame sampling rate (decimal frames per second). |
-| `UVChannel` | `int` | UV channel index used for the static mesh. |
+| Property              | Type                     | Description                                       |
+| --------------------- | ------------------------ | ------------------------------------------------- |
+| `AnimSequences`       | `TArray<UAnimSequence*>` | Array of animation sequences included in the VAT. |
+| `SkeletalMesh`        | `USkeletalMesh*`         | Reference to the source skeletal mesh.            |
+| `StaticMesh`          | `UStaticMesh*`           | Reference to the generated static mesh.           |
+| `BoneRotationTexture` | `UTexture2D*`            | Bone rotation animation texture.                  |
+| `BonePositionTexture` | `UTexture2D*`            | Bone position animation texture.                  |
+| `BoneWeightTexture`   | `UTexture2D*`            | Bone weight animation texture.                    |
+| `SampleRate`          | `float`                  | Frame sampling rate (decimal frames per second).  |
+| `UVChannel`           | `int`                    | UV channel index used for the static mesh.        |
 
 ### Module Structure
 
-| File | Purpose |
-|------|---------|
-| `AnimToTextureGenerator.cpp` | Main module entry point. Handles startup/shutdown, registers toolbar buttons, content browser context menu, and extends the Skeletal Mesh Editor toolbar. |
-| `AnimToTextureGeneratorLibrary.cpp` | Blueprint-accessible library functions. Provides utility functions for opening the animation picker, invoking conversion, managing materials, and showing notifications. |
-| `Processor.cpp` | Core processing logic. Orchestrates the full VAT generation pipeline: static mesh creation, bone texture extraction, material cloning, material instance creation, and VAT generation. |
-| `AnimSequencePicker.cpp` | Slate UI widget for the animation sequence picker dialog. Provides filtered asset selection with LOD level support. |
+| File                                | Purpose                                                                                                                                                                                |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AnimToTextureGenerator.cpp`        | Main module entry point. Handles startup/shutdown, registers toolbar buttons, content browser context menu, and extends the Skeletal Mesh Editor toolbar.                              |
+| `AnimToTextureGeneratorLibrary.cpp` | Blueprint-accessible library functions. Provides utility functions for opening the animation picker, invoking conversion, managing materials, and showing notifications.               |
+| `Processor.cpp`                     | Core processing logic. Orchestrates the full VAT generation pipeline: static mesh creation, bone texture extraction, material cloning, material instance creation, and VAT generation. |
+| `AnimSequencePicker.cpp`            | Slate UI widget for the animation sequence picker dialog. Provides filtered asset selection with LOD level support.                                                                    |
 
 ### Version Compatibility
 
@@ -149,7 +153,6 @@ Copyright (c) qq292. All Rights Reserved.
 
 ---
 
-|||||
-|:---:|:---:|:---:|:---:|
-|[![Github](https://cdn.simpleicons.org/github/24292e =x30)](https://github.com/qq292)|[![Bilibili](https://cdn.simpleicons.org/bilibili/fb7299 =x30)](https://space.bilibili.com/3707016472169438)|[![Youtube](https://cdn.simpleicons.org/youtube/ff0000 =x30) ](https://www.youtube.com/@gaojiangchen)|[![Fab](https://img.shields.io/badge/Fab-007EFF?style=flat-square&logo=epicgames&logoColor=white =x30)](https://www.fab.com/sellers/gaojiang%20chen/about)|
-
+|                                                                                       |                                                                                                              |                                                                                                       |                                                                                                                                                            |
+| :-----------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [![Github](https://cdn.simpleicons.org/github/24292e =x30)](https://github.com/qq292) | [![Bilibili](https://cdn.simpleicons.org/bilibili/fb7299 =x30)](https://space.bilibili.com/3707016472169438) | [![Youtube](https://cdn.simpleicons.org/youtube/ff0000 =x30) ](https://www.youtube.com/@gaojiangchen) | [![Fab](https://img.shields.io/badge/Fab-007EFF?style=flat-square&logo=epicgames&logoColor=white =x30)](https://www.fab.com/sellers/gaojiang%20chen/about) |

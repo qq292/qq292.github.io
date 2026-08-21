@@ -113,11 +113,13 @@ h6 {
     --h1-height: 42px;
     --catalog-width: 360px;
     --anim-catalog-width: calc(-1 * var(--catalog-width));
-    --linear-001: linear-gradient(45deg,
-            white 0%,
-            deeppink 40%,
-            skyblue 60%,
-            white 100%);
+    --linear-001: linear-gradient(
+        45deg,
+        white 0%,
+        deeppink 40%,
+        skyblue 60%,
+        white 100%
+    );
     --green-01: #3da33d;
 
     /* 背景色 */
@@ -174,11 +176,13 @@ h6 {
     --h1-height: 42px;
     --catalog-width: 340px;
     --anim-catalog-width: calc(-1 * var(--catalog-width));
-    --linear-001: linear-gradient(45deg,
-            #2a2a2a 0%,
-            #6b2a35 40%,
-            #2d5f8a 60%,
-            #2a2a2a 100%);
+    --linear-001: linear-gradient(
+        45deg,
+        #2a2a2a 0%,
+        #6b2a35 40%,
+        #2d5f8a 60%,
+        #2a2a2a 100%
+    );
     --green-01: #5ec95e;
 
     /* 背景色 — 中性深灰，去掉蓝色调 */
@@ -619,7 +623,7 @@ summary::marker {
     border-radius: 1px;
 }
 
-.content ol>li {
+.content ol > li {
     counter-increment: list-counter;
     list-style: none;
     position: relative;
@@ -628,7 +632,7 @@ summary::marker {
     color: var(--text-primary);
 }
 
-.content ol>li::before {
+.content ol > li::before {
     content: counter(list-counter);
     position: absolute;
     left: 4px;
@@ -645,7 +649,7 @@ summary::marker {
     z-index: 1;
 }
 
-.content ol>li::after {
+.content ol > li::after {
     content: "";
     position: absolute;
     left: 48px;
@@ -661,7 +665,7 @@ summary::marker {
     margin: 0.5em 0;
 }
 
-.content ul:not(.contains-task-list)>li {
+.content ul:not(.contains-task-list) > li {
     list-style: none;
     position: relative;
     padding-left: 2rem;
@@ -669,15 +673,15 @@ summary::marker {
     color: var(--text-primary);
 }
 
-.content ul:not(.contains-task-list) li+li {
+.content ul:not(.contains-task-list) li + li {
     margin-top: 0.2em;
 }
 
-.content ul:not(.contains-task-list)>li:hover::before {
+.content ul:not(.contains-task-list) > li:hover::before {
     background: var(--list-marker-hover);
 }
 
-.content ul:not(.contains-task-list)>li::before {
+.content ul:not(.contains-task-list) > li::before {
     content: "";
     position: absolute;
     left: 14px;
@@ -845,7 +849,7 @@ li.collapsed .toc-toggle::before {
     font-size: 16px;
 }
 
-li.collapsed>ul {
+li.collapsed > ul {
     display: none;
 }
 
@@ -1002,10 +1006,9 @@ li.collapsed>ul {
     display: flex;
     flex-direction: column;
     justify-content: center;
-     align-items: center;
+    align-items: center;
     width: 200px;
     height: auto;
-   
 }
 
 /* dialog 容器 */
@@ -1058,7 +1061,7 @@ li.collapsed>ul {
     position: relative;
     display: inline-block;
     min-width: 80px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 14px;
     color: var(--text-primary);
 }
@@ -1095,14 +1098,16 @@ li.collapsed>ul {
     top: calc(100% + 6px);
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--bg-blockquote);
+    background-color: var(--bg-content);
     border-radius: 12px;
     padding: 4px 0;
     min-width: 120px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.2s, visibility 0.2s;
+    transition:
+        opacity 0.2s,
+        visibility 0.2s;
     z-index: 999;
 }
 
@@ -1119,5 +1124,5 @@ li.collapsed>ul {
 }
 
 .language-dropdown div:hover {
-    background: rgba(0, 0, 0, 0.06);
+    background: var(--bg-hover);
 }
