@@ -252,20 +252,12 @@
         if (targetUrl) {
             // 本地环境下，如果目标不是本地地址，走 gmd 处理
             const hostname = new URL(targetUrl, window.location.href).hostname;
-            if (window.location.hostname === "127.0.0.1") {
-                if (hostname === "github.com") {
-                    gmd(targetUrl);
-                } else if (hostname === "gitee.com") {
-                    mmd(targetUrl);
-                } else {
-                    fetchUrl = targetUrl;
-                }
+            if (hostname === "github.com") {
+                gmd(targetUrl);
+            } else if (hostname === "gitee.com") {
+                mmd(targetUrl);
             } else {
-                if (hostname === "gitee.com") {
-                    mmd(targetUrl);
-                } else {
-                    fetchUrl = targetUrl;
-                }
+                fetchUrl = targetUrl;
             }
         } else {
             // 没有 url 参数，默认加载同目录下的 README.md
