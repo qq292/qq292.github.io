@@ -675,7 +675,6 @@ export function render(markdown, urlf, imgf) {
         md.renderer.rules.image = function (tokens, idx, options, env, self) {
             const token = tokens[idx];
             const srcIndex = token.attrIndex("src");
-            console.log(token);
             if (srcIndex >= 0) {
                 const src = token.attrs[srcIndex][1];
 
@@ -683,10 +682,10 @@ export function render(markdown, urlf, imgf) {
                     // 完整 URL，不动
                 } else if (src.startsWith("/")) {
                     // 根相对路径：/notebooks/figures/PDSH-cover.png
-                    console.log("根相对路径");
+                    // console.log("根相对路径");
                     token.attrs[srcIndex][1] = imgf["rootRelative"] + src;
                 } else {
-                    console.log("相对路径");
+                    // console.log("相对路径");
                     // 相对路径：notebooks/figures/PDSH-cover.png
                     token.attrs[srcIndex][1] = imgf["relative"] + src;
                 }
@@ -717,10 +716,10 @@ export function render(markdown, urlf, imgf) {
                     ) {
                         return match;
                     } else if (src.startsWith("/")) {
-                        console.log("根相对路径");
+                        // console.log("根相对路径");
                         return `src="${imgf["rootRelative"]}${src}"`;
                     } else {
-                        console.log("相对路径");
+                        // console.log("相对路径");
                         return `src="${imgf["relative"]}${src}"`;
                     }
                 },
@@ -732,33 +731,45 @@ export function render(markdown, urlf, imgf) {
     }
 
     if (urlf) {
-        // 处理 Markdown 链接语法：[text](href)
-        const defaultLinkRender = md.renderer.rules.link2;
-        console.log("link2");
-        md.renderer.rules.link2 = function (tokens, idx, options, env, self) {
+        const defaultLinkRender =
+            md.renderer.rules.link_open ||
+            function (tokens, idx, options, env, self) {
+                return self.renderToken(tokens, idx, options);
+            };
+
+        md.renderer.rules.link_open = function (
+            tokens,
+            idx,
+            options,
+            env,
+            self,
+        ) {
             const token = tokens[idx];
-            console.log("link2: ", token);
             const hrefIndex = token.attrIndex("href");
             if (hrefIndex >= 0) {
                 const href = token.attrs[hrefIndex][1];
-                if (href.startsWith("http://") || href.startsWith("https://")) {
-                    // 完整 URL，不动
-                } else if (href.startsWith("/")) {
-                    console.log("根相对url");
-                    token.attrs[hrefIndex][1] = urlf["rootRelative"] + href;
-                } else {
-                    console.log("相对url");
-                    // 去掉开头的 ./，使 README.CN.md 和 ./README.CN.md 统一处理
-                    token.attrs[hrefIndex][1] =
-                        urlf["relative"] + href.replace(/^\.\//, "");
-                }
+                if (isAnchorLink)
+                    if (
+                        href.startsWith("http://") ||
+                        href.startsWith("https://") ||
+                        href.startsWith("#") ||
+                        href.startsWith("mailto:") ||
+                        href.startsWith("tel:")
+                    ) {
+                        // 完整 URL，不动
+                    } else if (href.startsWith("/")) {
+                        // token.attrs[hrefIndex][1] = urlf["rootRelative"] + href;
+                        console.log("url根路径, 未处理");
+                    } else {
+                        console.log(href);
+                        token.attrs[hrefIndex][1] =
+                            urlf["relative"] + href.replace(/^\.\//, "");
+                    }
             }
-            return defaultLinkRender
-                ? defaultLinkRender(tokens, idx, options, env, self)
-                : self.renderToken(tokens, idx, options);
+            return defaultLinkRender(tokens, idx, options, env, self);
         };
 
-        // 处理 HTML <a> 标签
+        // 处理 HTML <a> 标签的 href
         const defaultHtmlBlock = md.renderer.rules.html_block;
         md.renderer.rules.html_block = function (
             tokens,
@@ -1035,8 +1046,10 @@ window.gmd = async function fetchGithubMd(githubUrl) {
     // ./README.CN.md
     // https://github.com/Tencent/cherry-markdown/blob/dev/README.CN.md
 
-    urlf["relative"] = `https://api.github.com/repos/${owner}/${repo}`;
+    urlf["relative"] = `https://github.com/${owner}/${repo}/blob/${ref}/`;
+
     const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${ref}`;
+
     const res = await fetch(apiUrl);
     if (!res.ok) {
         throw new Error(`请求失败 status:${res.status}`);
