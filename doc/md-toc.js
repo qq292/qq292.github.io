@@ -201,9 +201,10 @@ export async function onLinkMD(targetUrl) {
 
         render(markdownContent);
     }
+
     //设置到浏览器参数
     const url = new URL(window.location);
-    url.searchParams.set("url", fetchUrl);
+    url.searchParams.set("url", targetUrl ? targetUrl : fetchUrl);
     history.pushState(null, "", url);
 }
 
