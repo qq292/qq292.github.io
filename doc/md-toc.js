@@ -166,10 +166,6 @@ function tagDataPlugin(md, options = {}) {
 
 // 处理a标签为md文件链接
 export async function onLinkMD(targetUrl) {
-    if (!targetUrl) {
-        console.log("无效url: ", targetUrl);
-        return;
-    }
     let isRoot = false;
     let fetchUrl;
     if (targetUrl) {
@@ -202,6 +198,10 @@ export async function onLinkMD(targetUrl) {
 
         render(markdownContent);
     }
+    //设置到浏览器参数
+    const url = new URL(window.location);
+    url.searchParams.set("url", fetchUrl);
+    history.pushState(null, "", url);
 }
 
 /**

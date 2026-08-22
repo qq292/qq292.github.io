@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="zh-cn" data-theme="light">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="source/css/all.css" />
+        <link rel="stylesheet" href="source/css/m.css" />
+        <title></title>
+
+        <!-- CSS 主题 -->
+        <link
+            id="hljs-theme"
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/atom-one-dark.min.css"
+        />
+        <!-- 代码高亮  -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
+
+        <!-- 流程图 -->
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+        <!-- 行号插件（CDN） -->
+        <script src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script>
+        <!-- md图片尺寸插件 -->
+        <script src="https://cdn.jsdelivr.net/npm/markdown-it-imsize@2.0.1/dist/markdown-it-imsize.min.js"></script>
+    </head>
+
+    <body>
+        <!-- loading模态框 -->
+        <dialog id="loading">
+            <div id="loading-content">
+                <div class="loader"></div>
+                <strong style="color: rgb(220, 214, 214); padding-top: 8px"
+                    >loading ...</strong
+                >
+            </div>
+        </dialog>
+        <!-- 悬浮弹层容器 -->
+        <div id="footnote-popover" class="footnote-popover">
+            <div class="popover-content"></div>
+        </div>
+        <!-- 工具栏 -->
+        <div class="toolBar">
+            <div class="toolBar-left">
+                <i
+                    id="menu"
+                    class="fa fa-align-right"
+                    style="font-size: 1.15rem"
+                ></i>
+            </div>
+            <div class="toolBar-center"></div>
+            <div class="toolBar-right">
+                <div class="toolBar-right-group1">
+                    <!-- 语言选择 -->
+                    <div
+                        class="language-select"
+                        id="languageSelect"
+                        style="display: none"
+                    >
+                        <div class="language-trigger">
+                            <span class="selected-text"></span>
+                            <span class="arrow">▼</span>
+                        </div>
+                        <div
+                            class="language-dropdown"
+                            id="language-dropdown"
+                        ></div>
+                    </div>
+                    <!-- 切换主题 -->
+                    <button
+                        id="theme-toggle"
+                        class="theme-toggle"
+                        title="切换暗色模式"
+                        aria-label="切换暗色模式"
+                    >
+                        <span class="icon-sun">&#9728;</span>
+                        <span class="icon-moon">&#9790;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- 目录 正文 -->
+        <div class="container">
+            <div class="content-box">
+                <div class="catalog scroll"></div>
+                <div class="content-article">
+                    <div class="content scroll" id="contentContainer"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="importmap">
+        {
+            "imports": {
+                "markdown-it": "https://cdn.jsdelivr.net/npm/markdown-it@14/+esm",
+                "markdown-it-anchor": "https://cdn.jsdelivr.net/npm/markdown-it-anchor@9/+esm",
+                "markdown-it-task-lists": "https://cdn.jsdelivr.net/npm/markdown-it-task-lists@2.0.1/+esm",
+                "markdown-it-footnote": "https://cdn.jsdelivr.net/npm/markdown-it-footnote@4/+esm",
+                "md-toc": "./md-toc.js"
+            }
+        }
+    </script>
+    <script>
+        let savePrefixion = "test";
+        const STORAGE_KEY = "theme-preference";
+        const STORAGE_CODE_ROW_KEY = "is-hide-row-number";
+
+        //切换代码行号的可见性
+        function switchCodeNimberVisible(event) {
+            if (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
+            const contentEle = document.getElementById("contentContainer");
+            contentEle.classList.toggle("hide-line-numbers");
+            const value = contentEle.classList.contains("hide-line-numbers");
+            localStorage.setItem(STORAGE_CODE_ROW_KEY, value);
+        }
+
+        //应用代码行号的可见性
+        function applyCodeNumberVisible() {
+            const stored = localStorage.getItem(STORAGE_CODE_ROW_KEY);
+            const contentEle = document.getElementById("contentContainer");
+            if (stored === "true") {
+                contentEle.classList.add("hide-line-numbers");
+            }
+        }
+        //切换代码主题配色
+        function switchTheme(themeName, isSave = true) {
+            const link = document.getElementById("hljs-theme");
+            link.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/${themeName}.min.css`;
+            if (isSave) {
+                localStorage.setItem("code-theme", themeName);
+            }
+        }
+        function toggleDarkLight() {
+            const link = document.getElementById("hljs-theme");
+            const isDark = link.href.includes("dark");
+            const newTheme = isDark ? "docco" : "atom-one-dark";
+            switchTheme(newTheme);
+        }
+        function applyCodeNumTheme() {
+            const stored = localStorage.getItem("code-theme");
+            if (stored === "docco" || stored === "atom-one-dark") {
+                switchTheme(stored, false);
+            } else {
+                switchTheme("atom-one-dark", false);
+            }
+        }
+
+        (function () {
+            const html = document.documentElement;
+            const toggleBtn = document.getElementById("theme-toggle");
+            applyCodeNumberVisible();
+            applyCodeNumTheme();
+            // 1. 读取存储的主题，或根据系统偏好自动选择
+            function getPreferredTheme() {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) return stored;
+                // 未存储时，跟随系统偏好
+                return window.matchMedia("(prefers-color-scheme: dark)").matches
+                    ? "dark"
+                    : "light";
+            }
+
+            // 2. 应用主题
+            function applyTheme(theme) {
+                html.setAttribute("data-theme", theme);
+                localStorage.setItem(STORAGE_KEY, theme);
+            }
+
+            // 3. 初始化
+            applyTheme(getPreferredTheme());
+
+            // 4. 监听切换按钮
+            toggleBtn.addEventListener("click", function () {
+                const current = html.getAttribute("data-theme");
+                const next = current === "dark" ? "light" : "dark";
+                applyTheme(next);
+                switchTheme(next === "light" ? "docco" : "atom-one-dark");
+            });
+
+            // 5. 监听系统主题变化（仅在用户未手动设置时生效）
+            window
+                .matchMedia("(prefers-color-scheme: dark)")
+                .addEventListener("change", function (e) {
+                    if (!localStorage.getItem(STORAGE_KEY)) {
+                        applyTheme(e.matches ? "dark" : "light");
+                        switchTheme(
+                            e.matches === "light" ? "docco" : "atom-one-dark",
+                        );
+                    }
+                });
+        })();
+
+        // 1.目录收缩控制 (工具栏按钮)
+        var catalog = document.querySelector(".catalog");
+        var btn_menu = document.querySelector("#menu");
+
+        function playCatalogAnimation(animName) {
+            catalog.classList.remove("anim-catalog-to", "anim-catalog-back");
+            void catalog.offsetWidth;
+            catalog.classList.add("anim-catalog-" + animName);
+        }
+        btn_menu.addEventListener("click", () => {
+            if (catalog.classList.contains("anim-catalog-to")) {
+                playCatalogAnimation("back");
+            } else {
+                catalog.classList.remove(
+                    "anim-catalog-to",
+                    "anim-catalog-back",
+                );
+                void catalog.offsetWidth;
+                playCatalogAnimation("to");
+            }
+        });
+    </script>
+
+    <script type="module">
+        import MarkdownIt from "markdown-it";
+        import MarkdownItAnchor from "markdown-it-anchor";
+        import {
+            setMarkdownInstance,
+            render,
+            simpleHash,
+            onLinkMD,
+        } from "md-toc";
+        import markdownItTaskLists from "markdown-it-task-lists";
+        import footnote from "markdown-it-footnote";
+
+        const md = new MarkdownIt({
+            html: true,
+        })
+            .use(markdownItTaskLists, { enabled: true })
+            .use(footnote)
+            .use(window["markdown-it-imsize.js"]);
+
+        setMarkdownInstance(md, MarkdownItAnchor, {
+            headingSelector: "h1, h2, h3, h4, h5, h6",
+            maxDepth: 0,
+            scrollBehavior: -150,
+            collapsible: true,
+            collapseDepth: -1,
+            contentContainer: ".content",
+            tocContainer: ".catalog",
+        });
+
+        const params = new URLSearchParams(window.location.search);
+        const targetUrl = params.get("url");
+        let isRoot = false;
+        let fetchUrl;
+        if (targetUrl) {
+            const hostname = new URL(targetUrl, window.location.href).hostname;
+            if (hostname === "github.com") {
+                gmd(targetUrl);
+            } else if (hostname === "gitee.com") {
+                mmd(targetUrl);
+            } else {
+                fetchUrl = targetUrl;
+            }
+        } else {
+            // 没有 url 参数，默认加载同目录下的 README.md
+            fetchUrl = new URL("README.md", window.location.href);
+            isRoot = true;
+        }
+
+        // 统一执行 fetch + render
+        if (fetchUrl) {
+            savePrefixion = simpleHash(fetchUrl);
+            const response = await fetch(fetchUrl);
+            let markdownContent = await response.text();
+
+            if (isRoot) {
+                const s = await makeUrlList();
+                markdownContent = s.join("<br>") + markdownContent;
+            }
+
+            render(markdownContent);
+        }
+
+        const languageSelect = document.getElementById("languageSelect");
+        const trigger = languageSelect.querySelector(".language-trigger");
+        const dropdown = languageSelect.querySelector(".language-dropdown");
+        const selectedText = languageSelect.querySelector(".selected-text");
+        const hiddenSelect = document.getElementById("language");
+
+        // 点击触发器切换展开/收起
+        trigger.addEventListener("click", (e) => {
+            e.stopPropagation();
+            languageSelect.classList.toggle("open");
+        });
+
+        // 点击选项
+        dropdown.addEventListener("click", (e) => {
+            const target = e.target.closest("[data-value]");
+            if (target) {
+                selectedText.textContent = target.textContent;
+                languageSelect.classList.remove("open");
+                onLinkMD(target.dataset.value);
+            }
+        });
+
+        // 点击外部关闭
+        document.addEventListener("click", () => {
+            languageSelect.classList.remove("open");
+        });
+    </script>
+</html>
