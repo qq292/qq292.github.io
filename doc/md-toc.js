@@ -715,6 +715,9 @@ export function render(markdown, urlf, imgf) {
                         imgf["relative"] + src.replace(/^\.\//, "");
                 }
             }
+            if (imgf["isGitee"] && imgf["isGitee"] === 1) {
+                token.attrs.push(["referrerpolicy", "no-referrer"]);
+            }
 
             // 调用原始渲染器生成 HTML
             return defaultRender
@@ -750,8 +753,15 @@ export function render(markdown, urlf, imgf) {
                             return match;
                         }
                     } else if (src.startsWith("/")) {
+                        if (imgf["isGitee"] && imgf["isGitee"] === 1) {
+                            return `src="${imgf["rootRelative"]}${src}"  referrerpolicy="no-referrer"`;
+                        }
+
                         return `src="${imgf["rootRelative"]}${src}"`;
                     } else {
+                        if (imgf["isGitee"] && imgf["isGitee"] === 1) {
+                            return `src="${imgf["rootRelative"]}${src}"  referrerpolicy="no-referrer"`;
+                        }
                         return `src="${imgf["relative"]}${src.replace(/^\.\//, "")}"`;
                     }
                 },
@@ -1124,7 +1134,7 @@ window.gmd = async function fetchGithubMd(githubUrl) {
 // 渲染 码云md文件
 window.mmd = async function fetchGiteeMd(blobUrl) {
     savePrefixion = simpleHash(blobUrl);
-    const imgf = {};
+    const imgf = { isGitee: 1 };
     const urlf = {};
     const urlObj = new URL(blobUrl);
     const parts = urlObj.pathname.split("/").filter(Boolean);
@@ -1148,7 +1158,10 @@ window.mmd = async function fetchGiteeMd(blobUrl) {
     }
     const mdText = base64ToUtf8(json.content);
 
-    // 补全 urlf 和 imgf
+    //代理
+    // imgf["rootRelative"] =
+    //     `https://cdn.jsdelivr.net/gh/${owner}/${repo}@${ref}/`;
+
     imgf["rootRelative"] = `https://gitee.com/${owner}/${repo}/raw/${ref}/`;
     imgf["relative"] =
         `${imgf["rootRelative"]}${splitDirAndFile(filePath).dir}/`;
