@@ -166,26 +166,41 @@ function tagDataPlugin(md, options = {}) {
 
 // 处理a标签为md文件链接
 export async function onLinkMD(targetUrl) {
+    if (!targetUrl) {
+        console.log("无效url: ", targetUrl);
+        return;
+    }
+    let isRoot = false;
+    let fetchUrl;
     if (targetUrl) {
-        if (window.location.hostname === "127.0.0.1") {
-            const hostname = new URL(targetUrl, window.location.href).hostname;
-            if (hostname === "127.0.0.1") {
-                savePrefixion = simpleHash(targetUrl);
-                const response = await fetch(targetUrl);
-                const markdownContent = await response.text();
-                render(markdownContent);
-            } else {
-                gmd(targetUrl);
-            }
+        const hostname = new URL(targetUrl, window.location.href).hostname;
+        if (hostname === "github.com") {
+            console.log("github啊");
+            gmd(targetUrl);
+        } else if (hostname === "gitee.com") {
+            console.log("码云啊");
+            mmd(targetUrl);
         } else {
-            savePrefixion = simpleHash(targetUrl);
-            const response = await fetch(targetUrl);
-            const markdownContent = await response.text();
-            render(markdownContent);
+            fetchUrl = targetUrl;
         }
-        const url = new URL(window.location);
-        url.searchParams.set("url", targetUrl);
-        history.pushState(null, "", url);
+    } else {
+        // 没有 url 参数，默认加载同目录下的 README.md
+        fetchUrl = new URL("README.md", window.location.href);
+        isRoot = true;
+    }
+
+    // 统一执行 fetch + render
+    if (fetchUrl) {
+        savePrefixion = simpleHash(fetchUrl);
+        const response = await fetch(fetchUrl);
+        let markdownContent = await response.text();
+
+        if (isRoot) {
+            const s = await makeUrlList();
+            markdownContent = s.join("<br>") + markdownContent;
+        }
+
+        render(markdownContent);
     }
 }
 
@@ -657,7 +672,16 @@ function waitAllImgBoxExpand(contentEl, allBoxReadyCb) {
         img.addEventListener("error", doneOne, { once: true });
     });
 }
-
+function githubBlobToRaw(blobUrl) {
+    const reg =
+        /^https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/blob\/([^\/]+)\/(.+)$/;
+    const match = blobUrl.match(reg);
+    if (!match) throw new Error("非github blob链接");
+    let [, owner, repo, ref, filePath] = match;
+    // 清除blob/ref后多余前置斜杠，解决 //xxx.svg 解析bug
+    filePath = filePath.replace(/^\/+/, "");
+    return `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${filePath}`;
+}
 /**
  * 一键渲染：目录 + 正文 + 滚动高亮 + 平滑滚动
  */
@@ -679,15 +703,16 @@ export function render(markdown, urlf, imgf) {
                 const src = token.attrs[srcIndex][1];
 
                 if (src.startsWith("http://") || src.startsWith("https://")) {
-                    // 完整 URL，不动
+                    if (src.includes("github.com") && src.includes("blob")) {
+                        token.attrs[srcIndex][1] = githubBlobToRaw(src);
+                    }
                 } else if (src.startsWith("/")) {
-                    // 根相对路径：/notebooks/figures/PDSH-cover.png
-                    // console.log("根相对路径");
+                    // 根相对路径：/README.md
                     token.attrs[srcIndex][1] = imgf["rootRelative"] + src;
                 } else {
-                    // console.log("相对路径");
-                    // 相对路径：notebooks/figures/PDSH-cover.png
-                    token.attrs[srcIndex][1] = imgf["relative"] + src;
+                    // 相对路径：README.md 或 ./README.md 统一处理
+                    token.attrs[srcIndex][1] =
+                        imgf["relative"] + src.replace(/^\.\//, "");
                 }
             }
 
@@ -696,6 +721,7 @@ export function render(markdown, urlf, imgf) {
                 ? defaultRender(tokens, idx, options, env, self)
                 : self.renderToken(tokens, idx, options);
         };
+
         // 处理 HTML <img> 标签
         const defaultHtmlBlock = md.renderer.rules.html_block;
         md.renderer.rules.html_block = function (
@@ -707,6 +733,7 @@ export function render(markdown, urlf, imgf) {
         ) {
             const token = tokens[idx];
             // 用正则匹配 src="..." 并替换路径
+
             token.content = token.content.replace(
                 /src="(.*?)"/g,
                 (match, src) => {
@@ -714,11 +741,18 @@ export function render(markdown, urlf, imgf) {
                         src.startsWith("http://") ||
                         src.startsWith("https://")
                     ) {
-                        return match;
+                        if (
+                            src.includes("github.com") &&
+                            src.includes("blob")
+                        ) {
+                            return `src="${githubBlobToRaw(src)}"`;
+                        } else {
+                            return match;
+                        }
                     } else if (src.startsWith("/")) {
                         return `src="${imgf["rootRelative"]}${src}"`;
                     } else {
-                        return `src="${imgf["relative"]}${src}"`;
+                        return `src="${imgf["relative"]}${src.replace(/^\.\//, "")}"`;
                     }
                 },
             );
@@ -756,10 +790,8 @@ export function render(markdown, urlf, imgf) {
                     ) {
                         // 完整 URL，不动
                     } else if (href.startsWith("/")) {
-                        console.log(href);
                         token.attrs[hrefIndex][1] = urlf["rootRelative"] + href;
                     } else {
-                        console.log(href);
                         token.attrs[hrefIndex][1] =
                             urlf["relative"] + href.replace(/^\.\//, "");
                     }
@@ -1064,9 +1096,10 @@ window.gmd = async function fetchGithubMd(githubUrl) {
         throw new Error("链接格式不对,请传入github blob网页链接");
     }
     const [, owner, repo, ref, filePath] = match;
-    // notebooks/figures/PDSH-cover.png
-    // https://github.com/jakevdp/PythonDataScienceHandbook/raw/master/notebooks/figures/PDSH-cover.png
-    imgf["relative"] = `https://github.com/${owner}/${repo}/raw/${ref}/`;
+
+    imgf["rootRelative"] = `https://github.com/${owner}/${repo}/raw/${ref}/`;
+    imgf["relative"] =
+        `${imgf["rootRelative"]}${splitDirAndFile(filePath).dir}/`;
 
     urlf["rootRelative"] = `https://github.com/${owner}/${repo}/blob/${ref}/`;
     urlf["relative"] =
@@ -1091,8 +1124,9 @@ window.gmd = async function fetchGithubMd(githubUrl) {
 // 渲染 码云md文件
 window.mmd = async function fetchGiteeMd(blobUrl) {
     savePrefixion = simpleHash(blobUrl);
+    const imgf = {};
+    const urlf = {};
     const urlObj = new URL(blobUrl);
-
     const parts = urlObj.pathname.split("/").filter(Boolean);
     const [owner, repo, mode, ref, ...filePathSegments] = parts;
 
@@ -1113,7 +1147,16 @@ window.mmd = async function fetchGiteeMd(blobUrl) {
         throw new Error("文件编码不是base64");
     }
     const mdText = base64ToUtf8(json.content);
-    render(mdText);
+
+    // 补全 urlf 和 imgf
+    imgf["rootRelative"] = `https://gitee.com/${owner}/${repo}/raw/${ref}/`;
+    imgf["relative"] =
+        `${imgf["rootRelative"]}${splitDirAndFile(filePath).dir}/`;
+
+    urlf["rootRelative"] = `https://gitee.com/${owner}/${repo}/blob/${ref}/`;
+    urlf["relative"] =
+        `${urlf["rootRelative"]}${splitDirAndFile(filePath).dir}/`;
+    render(mdText, urlf, imgf);
 };
 
 // ===== 2. 悬浮脚注逻辑 =====

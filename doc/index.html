@@ -245,39 +245,6 @@
             tocContainer: ".catalog",
         });
 
-        const params = new URLSearchParams(window.location.search);
-        const targetUrl = params.get("url");
-        let isRoot = false;
-        let fetchUrl;
-        if (targetUrl) {
-            const hostname = new URL(targetUrl, window.location.href).hostname;
-            if (hostname === "github.com") {
-                gmd(targetUrl);
-            } else if (hostname === "gitee.com") {
-                mmd(targetUrl);
-            } else {
-                fetchUrl = targetUrl;
-            }
-        } else {
-            // 没有 url 参数，默认加载同目录下的 README.md
-            fetchUrl = new URL("README.md", window.location.href);
-            isRoot = true;
-        }
-
-        // 统一执行 fetch + render
-        if (fetchUrl) {
-            savePrefixion = simpleHash(fetchUrl);
-            const response = await fetch(fetchUrl);
-            let markdownContent = await response.text();
-
-            if (isRoot) {
-                const s = await makeUrlList();
-                markdownContent = s.join("<br>") + markdownContent;
-            }
-
-            render(markdownContent);
-        }
-
         const languageSelect = document.getElementById("languageSelect");
         const trigger = languageSelect.querySelector(".language-trigger");
         const dropdown = languageSelect.querySelector(".language-dropdown");
@@ -304,5 +271,8 @@
         document.addEventListener("click", () => {
             languageSelect.classList.remove("open");
         });
+
+        const params = new URLSearchParams(window.location.search);
+        onLinkMD(params.get("url"));
     </script>
 </html>
