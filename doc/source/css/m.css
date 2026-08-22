@@ -57,9 +57,33 @@ h3,
 h4,
 h5,
 h6 {
-    font-weight: 600;
-    padding: 10px 0px;
+    position:relative;
+    line-height:3rem;
 }
+h1 { --tag: "#h1"; }
+h2 { --tag: "#h2"; }
+h3 { --tag: "#h3"; }
+h4 { --tag: "#h4"; }
+h5 { --tag: "#h5"; }
+h6 { --tag: "#h6"; }
+
+h1:hover::before,
+h2:hover::before,
+h3:hover::before,
+h4:hover::before,
+h5:hover::before,
+h6:hover::before {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: var(--text-primary);
+    font-size: 1rem;
+    content: var(--tag);
+}
+
+
+
+
 
 /* 滚动条默认样式 */
 ::-webkit-scrollbar {
