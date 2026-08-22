@@ -33,10 +33,12 @@ export function simpleHash(str) {
     return (hash >>> 0).toString(16).padStart(8, "0");
 }
 
-function setLoading(isOpon) {
+function setLoading(isOpon, text = "loading ...") {
     const dialog = document.getElementById("loading");
+    const loaddingText = document.getElementById("loaddingText");
     if (isOpon) {
         dialog.showModal();
+        loaddingText.innerHTML = text;
     } else {
         dialog.close();
     }
@@ -168,6 +170,7 @@ function tagDataPlugin(md, options = {}) {
 export async function onLinkMD(targetUrl) {
     let isRoot = false;
     let fetchUrl;
+    setLoading(true, "loading document ...");
     if (targetUrl) {
         const hostname = new URL(targetUrl, window.location.href).hostname;
         if (hostname === "github.com") {
@@ -691,7 +694,7 @@ export function render(markdown, urlf, imgf) {
     SCROLL_POSITION_KEY = getSaveKey("sp");
     clearTimeout(saveScrollTimer);
     processing = true;
-    setLoading(true);
+    setLoading(true, "image loading ...");
 
     if (imgf) {
         // 保存原始渲染器
@@ -1027,9 +1030,7 @@ export function render(markdown, urlf, imgf) {
     // 图片全部加载完成后回调 (设置滚动条上次缓存位置)
     function doLayoutWork() {
         const savedPos = localStorage.getItem(SCROLL_POSITION_KEY);
-        if (savedPos) {
-            contentEl.scrollTop = savedPos;
-        }
+        contentEl.scrollTop = savedPos ? savedPos : 0;
         processing = false;
         setLoading(false);
     }

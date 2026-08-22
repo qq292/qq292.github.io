@@ -27,17 +27,27 @@ table:not(:has(thead th:not(:empty))) thead {
 
 table:not(:has(thead th:not(:empty))) td {
     padding: 4px;
+    vertical-align: top;
 }
-
+table:not(:has(thead th:not(:empty))) tr:hover {
+    background-color: transparent;
+}
 /* a标签默认样式 */
 a {
-    color: #1a73e8;
+    color: var(--link-color);
     text-decoration: none;
-    outline: none;
+    transition:
+        color 0.2s,
+        border-color 0.2s;
 }
 
 a:hover {
-    color: #1557b0;
+    color: var(--link-hover-color);
+    border-bottom-color: var(--link-color);
+}
+
+a:active {
+    opacity: 0.8;
 }
 
 /* 标题默认样式 */
@@ -121,7 +131,9 @@ h6 {
         white 100%
     );
     --green-01: #3da33d;
-
+    /* a标签 */
+    --link-color: #0366d6;
+    --link-hover-color: #0245a0;
     /* 背景色 */
     --bg-body: #e6e6e6;
     --bg-catalog: #ffffff;
@@ -184,7 +196,9 @@ h6 {
         #2a2a2a 100%
     );
     --green-01: #5ec95e;
-
+    /* a标签 */
+    --link-color: #3a7bd5;
+    --link-hover-color: #79b8ff;
     /* 背景色 — 中性深灰，去掉蓝色调 */
     --bg-body: #1a1a1a;
     --bg-catalog: #222222;
