@@ -706,7 +706,6 @@ export function render(markdown, urlf, imgf) {
             if (srcIndex >= 0) {
                 const src = token.attrs[srcIndex][1];
                 if (src.startsWith("data:image")) {
-                    console.log("图片数据2");
                 } else if (
                     src.startsWith("http://") ||
                     src.startsWith("https://")
@@ -748,8 +747,7 @@ export function render(markdown, urlf, imgf) {
             token.content = token.content.replace(
                 /src="(.*?)"/g,
                 (match, src) => {
-                    if (src.startsWith("data")) {
-                        console.log("图片数据2");
+                    if (src.startsWith("data:image")) {
                         return match;
                     }
                     if (
