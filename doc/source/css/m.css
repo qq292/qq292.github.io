@@ -76,7 +76,7 @@ h6:hover::before {
     position: absolute;
     bottom: 0;
     right: 0;
-    color: var(--text-primary);
+    color: color-mix(in srgb, var(--text-primary) 40%, transparent);
     font-size: 1rem;
     content: var(--tag);
 }
