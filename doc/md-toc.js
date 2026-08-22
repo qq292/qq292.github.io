@@ -705,8 +705,12 @@ export function render(markdown, urlf, imgf) {
             const srcIndex = token.attrIndex("src");
             if (srcIndex >= 0) {
                 const src = token.attrs[srcIndex][1];
-
-                if (src.startsWith("http://") || src.startsWith("https://")) {
+                if (src.startsWith("data:image")) {
+                    console.log("图片数据2");
+                } else if (
+                    src.startsWith("http://") ||
+                    src.startsWith("https://")
+                ) {
                     if (src.includes("github.com") && src.includes("blob")) {
                         token.attrs[srcIndex][1] = githubBlobToRaw(src);
                     }
@@ -744,6 +748,10 @@ export function render(markdown, urlf, imgf) {
             token.content = token.content.replace(
                 /src="(.*?)"/g,
                 (match, src) => {
+                    if (src.startsWith("data")) {
+                        console.log("图片数据2");
+                        return match;
+                    }
                     if (
                         src.startsWith("http://") ||
                         src.startsWith("https://")
