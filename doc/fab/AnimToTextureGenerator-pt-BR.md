@@ -78,7 +78,7 @@ Este plugin é compatível com **Unreal Engine 5.4 a 5.8**, compatível com as A
 #### Demonstração completa em vídeo
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
-  <iframe src="https://www.youtube.com/embed/FDQjzFrp8bA?autoplay=1&start=30&controls=0"
+  <iframe src="https://www.youtube.com/embed/FDQjzFrp8bA?autoplay=1&start=0&controls=0"
         scrolling="no"
         frameborder="no"
         framespacing="0"

@@ -78,7 +78,7 @@ This plugin supports **Unreal Engine 5.4 through 5.8** and is compatible with bo
 #### Full Video Demo
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
-  <iframe src="https://www.youtube.com/embed/FDQjzFrp8bA?autoplay=1&start=30&controls=0"
+  <iframe src="https://www.youtube.com/embed/FDQjzFrp8bA?autoplay=1&start=0&controls=0"
         scrolling="no"
         frameborder="no"
         framespacing="0"
