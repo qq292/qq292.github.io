@@ -57,15 +57,27 @@ h3,
 h4,
 h5,
 h6 {
-    position:relative;
-    line-height:3rem;
+    position: relative;
+    line-height: 3rem;
 }
-h1 { --tag: "#h1"; }
-h2 { --tag: "#h2"; }
-h3 { --tag: "#h3"; }
-h4 { --tag: "#h4"; }
-h5 { --tag: "#h5"; }
-h6 { --tag: "#h6"; }
+h1 {
+    --tag: "#h1";
+}
+h2 {
+    --tag: "#h2";
+}
+h3 {
+    --tag: "#h3";
+}
+h4 {
+    --tag: "#h4";
+}
+h5 {
+    --tag: "#h5";
+}
+h6 {
+    --tag: "#h6";
+}
 
 h1:hover::before,
 h2:hover::before,
@@ -80,7 +92,6 @@ h6:hover::before {
     font-size: 1rem;
     content: var(--tag);
 }
-
 
 /* 滚动条默认样式 */
 ::-webkit-scrollbar {
@@ -613,7 +624,7 @@ summary::marker {
 }
 
 .code-block::-webkit-scrollbar {
-    height: 8px;
+    height: 4px;
 }
 
 .code-block::-webkit-scrollbar-thumb {
