@@ -239,7 +239,7 @@ h6:hover::before {
     --bg-hover: rgba(255, 255, 255, 0.06);
     --bg-table-stripe: #222222;
     --bg-table-hover: #2a2a2a;
-    --bg-blockquote: linear-gradient(135deg, #252525, #222222);
+    --bg-blockquote: linear-gradient(135deg, #1a1a1a, #222222);
     --bg-code-summary: #1e1e1e;
     --bg-code-block: #1a1a1a;
     --bg-checkbox: #252525;
@@ -743,42 +743,18 @@ summary::marker {
 
 /* ===== 文本引用 ===== */
 .content blockquote {
-    margin: 1.2em 0;
-    padding: 14px 18px 14px 48px;
-    background: var(--bg-blockquote);
-    border: 1px solid var(--border-blockquote);
-    border-radius: 10px;
+    margin: 0 0 0.8em;
+    padding: 8px 14px;
+    border-left: 0.25em solid var(--border-table-header, #6366f1);
+    background: var(--bg-blockquote, rgba(99, 102, 241, 0.06));
+    border-radius: 0 4px 4px 0;
     color: var(--text-secondary);
     font-size: 0.95em;
-    position: relative;
-    transition: box-shadow 0.2s;
-}
-
-.content blockquote:hover {
-    box-shadow: var(--shadow-blockquote-hover);
-}
-
-.content blockquote::before {
-    content: "i";
-    position: absolute;
-    left: 14px;
-    top: 14px;
-    width: 22px;
-    height: 22px;
-    line-height: 22px;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 700;
-    font-style: italic;
-    font-family: Georgia, serif;
-    color: #fff;
-    background: var(--list-marker);
-    border-radius: 50%;
+    line-height: 1.7;
 }
 
 .content blockquote p {
-    margin: 0.4em 0;
-    color: var(--text-primary);
+    margin: 0.3em 0;
 }
 
 .content blockquote p:first-child {
@@ -1171,4 +1147,14 @@ li.collapsed > ul {
 
 .language-dropdown div:hover {
     background: var(--bg-hover);
+}
+
+p {
+    line-height: 1.6;
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+p:last-child {
+    margin-bottom: 0;
 }
