@@ -80,21 +80,6 @@ h6 {
     margin-top: 0.3em;
 }
 
-/* .content h1::after,
-.content h2::after,
-.content h3::after,
-.content h4::after,
-.content h5::after,
-.content h6::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 100%;
-    width: 100%;
-    height: 2px;
-    border-bottom: 1px dashed var(--border-color);
-} */
-
 h1 {
     --tag: "#h1";
 }
@@ -1190,4 +1175,8 @@ li.collapsed > ul {
 
 .content p:first-child {
     margin-top: 0;
+}
+
+p > img {
+    display: block;
 }
