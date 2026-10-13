@@ -17,7 +17,6 @@ ul {
     list-style-type: none;
     padding-left: 0;
     margin: 0;
-    /* 可选，清除上下外边距 */
 }
 
 /* 无表头表格 */
@@ -51,6 +50,7 @@ a:active {
 }
 
 /* 标题默认样式 */
+
 h1,
 h2,
 h3,
@@ -58,8 +58,43 @@ h4,
 h5,
 h6 {
     position: relative;
-    line-height: 3rem;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.3;
 }
+h4,
+h5,
+h6 {
+    font-size: 1.1em;
+}
+.content :where(h1, h2, h3, h4, h5, h6):first-of-type {
+    margin-top: 0;
+}
+
+#contentContainer :where(h1, h2, h3, h4, h5, h6, p) + ul,
+#contentContainer :where(h1, h2, h3, h4, h5, h6, p) + ol {
+    margin-top: 0;
+}
+
+.content :where(h1, h2, h3, h4, h5, h6) + :where(h1, h2, h3, h4, h5, h6) {
+    margin-top: 0.3em;
+}
+
+/* .content h1::after,
+.content h2::after,
+.content h3::after,
+.content h4::after,
+.content h5::after,
+.content h6::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    height: 2px;
+    border-bottom: 1px dashed var(--border-color);
+} */
+
 h1 {
     --tag: "#h1";
 }
@@ -388,8 +423,8 @@ body {
     width: 50%;
     display: flex;
     flex-direction: column;
-    font-size: medium;
-    line-height: 1.8rem;
+    font-size: 16px;
+    line-height: 1.5;
     color: var(--text-primary);
 }
 
@@ -511,7 +546,6 @@ img[height] {
     top: 50%;
     transform: translateY(-50%);
     font-size: 12px;
-    line-height: 1;
     transition: opacity 0.3s ease;
 }
 
@@ -650,11 +684,16 @@ summary::marker {
     color: #0eb340 !important;
 }
 
+.content ul,
+.content ol {
+    margin-top: 0.6em;
+    margin-bottom: 0.6em;
+}
+
 /* ===== 有序列表 ===== */
 .content ol {
     counter-reset: list-counter;
     padding-left: 0;
-    margin: 1.5em 0;
     position: relative;
 }
 
@@ -684,7 +723,6 @@ summary::marker {
     left: 4px;
     width: 24px;
     height: 24px;
-    line-height: 24px;
     text-align: center;
     font-size: 12px;
     font-weight: 700;
@@ -708,7 +746,6 @@ summary::marker {
 /* ===== 无序列表 ===== */
 .content ul:not(.contains-task-list) {
     padding-left: 0;
-    margin: 0.5em 0;
 }
 
 .content ul:not(.contains-task-list) > li {
@@ -750,12 +787,11 @@ summary::marker {
     border-radius: 0 4px 4px 0;
     color: var(--text-secondary);
     font-size: 0.95em;
-    line-height: 1.7;
 }
 
-.content blockquote p {
+/* .content blockquote p {
     margin: 0.3em 0;
-}
+} */
 
 .content blockquote p:first-child {
     margin-top: 0;
@@ -882,9 +918,9 @@ li.collapsed > ul {
     width: 100%;
     margin: 0;
     background: transparent;
-    /* 防止表格背景遮挡代码块背景 */
-    tab-size: 5;
-    line-height: 1.5;
+    tab-size: 4;
+    line-height: 1.3;
+    font-size: 13px;
 }
 
 /* 2. 清除单元格默认样式 */
@@ -967,7 +1003,6 @@ li.collapsed > ul {
     border-radius: 0 8px 8px 8px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
     font-size: 14px;
-    line-height: 1.6;
     opacity: 0;
     transform: translateY(4px);
     transition:
@@ -1149,12 +1184,10 @@ li.collapsed > ul {
     background: var(--bg-hover);
 }
 
-p {
-    line-height: 1.6;
-    margin-top: 0;
-    margin-bottom: 1em;
+.content p {
+    margin: 0 0 0.75em 0;
 }
 
-p:last-child {
-    margin-bottom: 0;
+.content p:first-child {
+    margin-top: 0;
 }
