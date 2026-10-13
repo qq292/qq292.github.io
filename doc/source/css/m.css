@@ -1176,7 +1176,3 @@ li.collapsed > ul {
 .content p:first-child {
     margin-top: 0;
 }
-
-p > img {
-    display: block;
-}
